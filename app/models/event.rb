@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :saison, :optional => true
-  has_one :circuit
+  belongs_to :circuit, :optional => true
+
   
 
 #  has_many :resultats, :dependent => :delete_all 

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :divisions
   resources :circuits
   resources :events
+  resources :equipes
+  resources :pilotes
 
   get 'home/index'
   root 'home#index'

@@ -53,6 +53,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipes", force: :cascade do |t|
+    t.string "nom"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "events", force: :cascade do |t|
     t.date "date"
     t.string "circuit"
@@ -62,6 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
     t.integer "circuit_id"
     t.integer "saison_id"
     t.integer "division_id"
+    t.integer "numero"
     t.index ["circuit_id"], name: "index_events_on_circuit_id"
     t.index ["division_id"], name: "index_events_on_division_id"
     t.index ["saison_id"], name: "index_events_on_saison_id"
@@ -71,6 +79,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
     t.string "nom"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "pilotes", force: :cascade do |t|
+    t.string "nom"
+    t.string "statut"
+    t.integer "ecurie"
+    t.string "division"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "division_id"
+    t.index ["division_id"], name: "index_pilotes_on_division_id"
   end
 
   create_table "saisons", force: :cascade do |t|
@@ -86,4 +105,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
   add_foreign_key "events", "circuits"
   add_foreign_key "events", "divisions"
   add_foreign_key "events", "saisons"
+  add_foreign_key "pilotes", "divisions"
 end

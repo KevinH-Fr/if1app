@@ -1,0 +1,147 @@
+
+<%# if user_signed_in? %>
+
+  <br/>
+  <h1 class="fa-solid fa-user fa-2xl fw-bold fs-1"> - Pilotes </h1>   
+  <br/>  <hr/>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-auto">
+          <strong> total: <%= @countPilotes %> </strong>
+      </div>
+
+      <div class="col-md-auto">
+          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+              <%= f.search_field :nom_or_statut_or_division_id_cont, placeholder: "Recherche...",
+                  class: "form-control me-2" %>
+              <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
+          <% end %>
+      </div>
+    
+      <div class="col-md-auto">
+          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+              <%= f.hidden_field :statut_eq, value: "actif" %>
+              <%= f.submit "Actif", class:"btn btn-success" %>
+          <% end %>
+      </div>
+      <div class="col-md-auto">
+          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+              <%= f.hidden_field :statut_eq, value: "inactif" %>
+              <%= f.submit "Inactif", class:"btn btn-danger" %>
+          <% end %>
+      </div>
+      
+          <% @divisions.each do |division| %>
+              <div class="col-md-auto">
+                  <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                      <%= f.hidden_field :division_id_eq, value: division.id %>
+                      <%= f.submit division.nom, class:"btn btn-dark" %>
+                  <% end %>
+              </div>
+          <% end %>
+
+          <div class="col-md-auto">
+              <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                  <%= f.hidden_field :statut_eq, value: "" %>
+                  <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
+              <% end %>
+          </div>
+
+      </div>
+  </div>
+
+  <hr/> 
+
+  <%# edition pdf %>
+    <strong> Editions PDF | </strong>
+    <% @divisions.each do |division| %>
+        <%= link_to "Division #{division.numero}", pilotes_path(divId: division.id, format: :pdf), class:"btn btn-dark" %>
+    <% end %>
+
+      <hr/> 
+
+  <%# tableau datas %>
+
+  <table class="table table-striped table-bordered table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th><%= sort_link(@q, :nom, "Nom", default_order: :asc) %></th>
+        <th><%= sort_link(@q, :ecurie, "Ecurie", default_order: :asc) %></th>
+        <th><%= sort_link(@q, :division_id, "Division", default_order: :asc) %></th>
+        <th><%= sort_link(@q, :statut, "Statut", default_order: :desc) %></th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @pilotes.each do |pilote| %>
+        <tr>
+        <td>  
+              <% if pilote.ecurie.blank?%>
+                  <%= image_tag 'no-image.png', alt: 'icon', width: '200' %>
+              <% else %>
+                  <%= link_to(pilote) do %>
+                      <div class="contenant">
+                          <%= image_tag(Equipe.find(pilote.ecurie).logo, style: "width: 300px; display: block", class: "img-fluid rounded") %> 
+                            <div class="texte_centrer"><%=  pilote.nom %></div>
+                      </div>
+                  <% end %>
+              <% end %>
+          </td>
+
+            <td>
+                <% if pilote.ecurie.present?%>
+                     <%= Equipe.find(pilote.ecurie).nom %>
+                <% end %>
+            </td>
+          <td>
+              <% divisionLiee = pilote.division_id %>
+              <% numDivision = Division.find(divisionLiee).numero %>
+                <% if numDivision == 1 %>
+                      <ul class="darkred">
+                        <%= Division.find(divisionLiee).nom %>
+                  <% else %>
+                    <% if numDivision == 2 %>
+                      <ul class="blue">
+                        <%= Division.find(divisionLiee).nom %>
+                      <% end %>
+                  <% end %>
+          </td>
+
+          <td> 
+              <% if pilote.statut == "actif" %>
+                  <ul class="green">
+                      <%= pilote.statut %>
+              <% else %>
+                  <ul class="red">
+                      <%= pilote.statut %>
+              <% end %> 
+          </td>
+
+          <td width="5%">
+              <%= link_to '', pilote, class:"fa-solid fa-eye btn btn-primary" %> 
+          </td>
+          <td width="5%">
+              <%= button_to '', pilote, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>
+          </td> 
+          <td width="5%">
+              <%= link_to '', edit_pilote_path(pilote), class:"fa-regular fa-pen-to-square btn btn-secondary" %> 
+          </td> 
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+ <hr/>
+
+ <%= paginate @pilotes, outer_window: 3 %>
+  <br/>
+
+  <%= link_to "Nouveau pilote", new_pilote_path, class:"btn btn-primary" %>
+
+<%# else %>
+
+ 
+  
+<%# end %>
