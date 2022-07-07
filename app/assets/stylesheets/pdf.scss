@@ -1,0 +1,73 @@
+
+body {
+	background-color: #4b4a48;
+	margin:0;
+} 
+
+th, td {
+   // border: 1px solid rgb(44, 43, 43);
+    text-align: center;
+    font-weight: bold;
+    font-family: verdana;
+    color: white;
+   
+}
+
+th {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    font-size: x-large;
+}
+
+ .val_entete {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: x-large;
+  height: 40px;
+ }
+
+ .cols_pos_score {
+    background-color: rgb(255, 255, 255);
+    width: 80px;
+    font-weight: bold;
+    font-size: x-large;
+    color: rgb(0, 0, 0);
+   
+ }
+
+ /* format des image ecurie avec nom pilote au dessus : */
+
+ .contenant {
+    position: relative;
+    text-align: left;
+    color: white;
+   // width: 500px;
+  
+  }
+  
+  .texte_centrer {
+    position: absolute;
+    top: 8%;
+    left: 25%;
+    transform: translate(0%, -50%);
+    font-weight: bold;
+    font-size: x-large;
+  }
+
+  h1 {
+    text-align: center;
+    color: white;
+    font-family: verdana;
+  }
+
+  #imgDrapeau{
+    position: absolute;
+    top: 5%;
+    left: 85%;
+  }
+
+  #imgLogoIf1{
+    position: absolute;
+    top: 5%;
+    left: 3%;
+  }

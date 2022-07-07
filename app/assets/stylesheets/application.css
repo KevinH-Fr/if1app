@@ -10,6 +10,56 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+
  *= require_self
  */
+
+
+ /* format des champs : */
+
+ .green {
+    color: green;
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+}
+
+.darkred {
+    color: rgb(107, 9, 9);
+    font-weight: bold;
+}
+
+.blue {
+    color: rgb(12, 12, 155);
+    font-weight: bold;
+}
+
+ /* format des image ecurie avec nom pilote au dessus : */
+
+.contenant {
+  position: relative;
+  text-align: left;
+  color: white;
+}
+
+.texte_centrer {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  transform: translate(0%, -50%);
+  font-weight: bold;
+  font-size: medium;
+}
+
+
+@font-face {
+  font-family: 'F1regular';
+  src: url('Formula1-Regular_web_0.ttf');
+}
+
+body {
+  font-family: "F1regular";
+}
