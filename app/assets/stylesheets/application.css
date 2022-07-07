@@ -63,3 +63,20 @@
 body {
   font-family: "F1regular";
 }
+
+/* animation js home : */
+
+textarea {
+  height: 60%;
+  width: 100%;
+  display: block;
+  border: 0px solid #BBB;
+  color: #444;
+  font-size: medium;
+}
+
+button {
+  margin-top: 10px;
+  color: blue;
+  font: black;
+}

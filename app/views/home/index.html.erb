@@ -5,15 +5,14 @@
 
 <hr/>
 
-  <%#= image_tag 'animated_f1.gif', alt: 'icon', width: '400' %>
+  <%= image_tag 'animated_f1.gif', alt: 'icon', width: '400' %>
+
 
 <hr/>
 
- <textarea id="textExample" rows="5" cols="60">
-    Voici une NOUVELLE1 application RoR en developpement !
-    Elle utilise différentes fonctionnalités.
-    Beaucoup de choses semblent possibles,
-    avec un peu de temps et beaucoup de méthode ...
+ <textarea id="textExample">
+    Application RoR en developpement
+    In code we trust...
   </textarea>
 
 <script>
@@ -24,7 +23,7 @@
     });
 </script>
 
- <button onclick="animateText(textExample)">Relancer</button>
+ <%# <button onclick="animateText(textExample)">Relancer</button> %>
 
  <body>
   <script>
@@ -53,22 +52,6 @@
     }
   
   </script>
-
-<style>
-    textarea {
-    display: block;
-    border: 0px solid #BBB;
-    color: #444;
-    font-size: 150%;
-    }
-
-    button {
-    margin-top: 10px;
-    color: blue;
-    font: black;
-
-    }
-</style> 
 
 
 </body>
