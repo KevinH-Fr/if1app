@@ -14,6 +14,7 @@ gem "bootsnap", require: false
 gem 'ransack'
 gem 'kaminari'
 gem "sassc-rails"
+gem 'cloudinary'
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
