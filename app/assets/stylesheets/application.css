@@ -43,6 +43,7 @@
   position: relative;
   text-align: left;
   color: white;
+ /* min-width: 100px;*/
 }
 
 .texte_centrer {
@@ -69,14 +70,13 @@ body {
 textarea {
   height: 60%;
   width: 100%;
+  min-width: 80%;
   display: block;
   border: 0px solid #BBB;
   color: #444;
   font-size: medium;
 }
 
-button {
-  margin-top: 10px;
-  color: blue;
-  font: black;
+table {
+  border: 1px solid #000;
 }

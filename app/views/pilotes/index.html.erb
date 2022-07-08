@@ -78,21 +78,15 @@
       <% @pilotes.each do |pilote| %>
         <tr>
         <td>  
-              <% if pilote.ecurie.blank?%>
-                  <%= image_tag 'no-image.png', alt: 'icon', width: '200' %>
-              <% else %>
-                  <%= link_to(pilote) do %>
-                      <div class="contenant">
-                          <%= image_tag(Equipe.find(pilote.ecurie).logo, style: "width: 300px; display: block", class: "img-fluid rounded") %> 
-                            <div class="texte_centrer"><%=  pilote.nom %></div>
-                      </div>
-                  <% end %>
-              <% end %>
+             <%= link_to pilote.nom, pilote %>
           </td>
 
             <td>
                 <% if pilote.ecurie.present?%>
                      <%= Equipe.find(pilote.ecurie).nom %>
+                        <% if Equipe.find(pilote.ecurie).logo.present? %>
+                             <%= image_tag(Equipe.find(pilote.ecurie).logo, style: "width: 300px; display: block", class: "img-fluid rounded") %> 
+                        <% end %>
                 <% end %>
             </td>
           <td>
