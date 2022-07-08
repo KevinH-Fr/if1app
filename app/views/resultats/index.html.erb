@@ -1,0 +1,184 @@
+
+<h1>Resultats</h1>
+
+<%# btn choix saison %>
+  Choix saison |
+    <% @saisons.each do |saison| %>
+          <%= link_to "#{saison.nom}", 
+          resultats_path(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
+    <% end %>
+
+      <% if (@saisonId).present? %>
+        <% @saisonId %>
+        <hr/> 
+
+        <%# btn choix division %>
+        Choix division |
+        <% @divisions.each do |division| %>
+          <%= link_to "D#{division.numero}", 
+              resultats_path(saisonId: @saisonId, divisionId: division.id), 
+              class:"btn btn-dark", :method => :post %> 
+        <% end %>
+
+          <% if (@divisionId).present? %>
+            <% @divisionId %>
+            <hr/> 
+
+            <%# btn choix event %>
+            Choix event |
+            <% @eventsFiltres.order(:numero).each do |event| %>
+              <% if @saisonId = event.saison_id %>
+                <% if @divisionId = event.division_id %>
+                  <% divGp = Division.find(event.division_id).numero %>
+                  <% saisonEvent = Saison.find(event.saison_id).nom %>
+                  <% nomPays = Circuit.find(event.circuit_id).pays %>
+                  <%= link_to "GP #{event.numero}"" - #{nomPays}", 
+                      resultats_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id), 
+                      class:"btn btn-primary", :method => :post %> 
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+  <hr/> 
+
+  <%= link_to "Nouveau résultat", new_resultat_path, class:"btn btn-primary" %>
+
+  <%# entete event %>
+  <%# @eventId %>
+
+ <% if (@eventId).blank? %>
+ <% else %>
+
+    <table width="600">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Date</th>
+            <th>Pays</th>
+            <th>Drapeau</th>
+            <th>Carte</th>
+            <th>Division</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+                <%= Event.find(@eventId).numero %>
+            </td>
+            <td>
+                <%= Event.find(@eventId).date %>
+            </td>
+            <td>
+                  <% circuitId = Event.find(@eventId).circuit_id %> 
+                  <%= Circuit.find(circuitId).pays %>
+            </td>
+            <td width="60">
+              <% if (Circuit.find(circuitId).drapeau).blank? %>
+              <% else %>
+                <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 50px; display: block", class: "img-fluid rounded") %> 
+              <% end %>
+            </td>
+            <td width="60">
+              <% if (Circuit.find(circuitId).carte).blank? %>
+              <% else %>
+                  <%= image_tag(Circuit.find(circuitId).carte, style: "width: 50px; display: block", class: "img-fluid rounded") %>  
+              <% end %>
+            </td>
+            <td>
+                <% divisionId = Event.find(@eventId).division_id %> 
+                <%= Division.find(divisionId).numero %>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <hr/>
+   
+   <%# tableau datas %>
+
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+       <%#   <th>Event</th> %>
+      <%#  <th>Pays</th> %>
+        <th>Pilote</th>
+        <th>Ecurie</th>
+        <th>Qualification</th>
+        <th>Course</th>
+        <th>DOTD</th>
+        <th>MT</th>
+        <th>Score</th>
+
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @resultatsFiltres.each do |res| %>
+        <tr>
+          <td>  
+              <% idPilote = res.pilote_id %> 
+              <% nomPilote = Pilote.find(idPilote).nom %> 
+              <%= nomPilote %>
+          </td> 
+          <td> 
+             <% idEcurie = res.ecurie %>  
+             <% nomEcurie = Equipe.find(idEcurie).nom %> 
+             <%= nomEcurie %>
+             <% if Equipe.find(idEcurie).logo.present? %>
+                <%= image_tag Equipe.find(idEcurie).logo, style: "width: 300px; display: block", class: "img-fluid rounded" %>
+             <% end %>
+          </td>
+
+         <td> <%= res.qualification %>  </td>
+         <td> <%= res.course %>    </td>
+
+          <td> 
+                <% if res.dotd == true %>
+                  <i class="fa-solid fa-circle-check fa-xl" style="color:green"></i>
+                <% else %>
+                  <i class="fa-solid fa-circle-xmark fa-xl" style="color:red"></i>
+                <% end %>
+              </td>
+              
+              <td> 
+                <% if res.mt == true %>
+                  <i class="fa-solid fa-circle-check fa-xl" style="color:green"></i>
+                <% else %>
+                  <i class="fa-solid fa-circle-xmark fa-xl" style="color:red"></i>
+                <% end %>   
+              </td>
+
+               <%#= points %>
+               <td class="fw-bold fs-xl"> <%= res.score.to_i %>    </td>
+
+                <%#= actions %>
+                <td width="5%">
+                    <%= link_to '', res, class:"fa-solid fa-eye btn btn-primary" %> 
+                </td>
+                <td width="5%">
+                  <%= button_to '', res, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>
+                </td> 
+                <td width="5%">
+                    <%= link_to "", edit_resultat_path(res), class:"fa-regular fa-pen-to-square btn btn-warning" %> 
+                </td> 
+
+
+        </tr>
+      <% end %> 
+    </tbody>  
+  
+  </table>
+
+   <br/>  <hr/>
+
+  <%# PDF event actif %>
+ 
+  <% numGp = Event.find(@eventId).numero %>
+  <%= link_to "PDF",  resultats_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
+
+ <% end %>
+
+
+

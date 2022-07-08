@@ -1,0 +1,151 @@
+
+<h1>Classements</h1>
+
+   <br/>
+
+<%# btn choix saison %>
+  Choix saison |
+    <% @saisons.each do |saison| %>
+          <%= link_to "#{saison.nom}", 
+              classements_path(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
+    <% end %>
+
+      <% if (@saisonId).present? %>
+        <% @saisonId %>
+        <hr/> 
+
+        <%# btn choix division %>
+        Choix division |
+        <% @divisions.each do |division| %>
+          <%= link_to "D#{division.numero}", 
+              classements_path(saisonId: @saisonId, divisionId: division.id), 
+              class:"btn btn-dark", :method => :post %> 
+        <% end %>
+
+          <% if (@divisionId).present? %>
+            <% @divisionId %>
+            <hr/> 
+
+            <%# btn choix event %>
+            Choix event |
+            <% @eventsFiltres.order(:numero).each do |event| %>
+              <% if @saisonId = event.saison_id %>
+                <% if @divisionId = event.division_id %>
+                  <% divGp = Division.find(event.division_id).numero %>
+                  <% saisonEvent = Saison.find(event.saison_id).nom %>
+                  <% numGp = Event.find(event.id).numero %>
+                  <% nomPays = Circuit.find(event.circuit_id).pays %>
+                  <%= link_to "GP #{event.numero}"" - #{nomPays}", 
+                      classements_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
+                      class:"btn btn-primary", :method => :post %> 
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+      <% end %>
+  <hr/> 
+
+  <%# entete event %>
+  <%# @eventId %>
+
+ <% if (@eventId).present? %>
+
+    <table width="600">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Date</th>
+            <th>Pays</th>
+            <th>Drapeau</th>
+            <th>Carte</th>
+            <th>Division</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+                <%= Event.find(@eventId).numero %>
+            </td>
+            <td>
+                <%= Event.find(@eventId).date %>
+            </td>
+            <td>
+                  <% circuitId = Event.find(@eventId).circuit_id %> 
+                  <%= Circuit.find(circuitId).pays %>
+            </td>
+            <td width="60">
+              <% if (Circuit.find(circuitId).drapeau).blank? %>
+              <% else %>
+                <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 50px; display: block", class: "img-fluid rounded") %> 
+              <% end %>
+            </td>
+            <td width="60">
+              <% if (Circuit.find(circuitId).carte).blank? %>
+              <% else %>
+                  <%= image_tag(Circuit.find(circuitId).carte, style: "width: 50px; display: block", class: "img-fluid rounded") %>  
+              <% end %>
+            </td>
+            <td>
+             
+                <% divisionId = Event.find(@eventId).division_id %> 
+                <%= Division.find(divisionId).numero %>
+            
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+    <hr/>
+   
+ <%#= tableau data classement %>
+
+   <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th style="text-align: center;">#</th>
+        <th>Pilote</th>
+        <th style="text-align: center;">total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <% @resultatsFiltres.each_with_index do | res, i| %>
+          <td style="text-align: center;">
+              <strong>  
+                <%= (i+1) %>
+              </strong> 
+          </td>
+          <td>
+           <div class="contenant">
+              <% equipeId = Pilote.find(res[0]).ecurie %>  
+              <% nomPilote = Pilote.find(res[0]).nom %> 
+              <%= image_tag Equipe.find(equipeId).logo, style: "width: 200px; display: block", class: "img-fluid rounded" %>
+                <div class="texte_centrer">
+                  <%= nomPilote %> 
+                </div>
+            </div>
+          </td>
+          <td style="text-align: center;">
+            <strong>
+              <%= number_with_precision(res[1], precision: 0) %>
+            </strong>
+          </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+
+ <br/> <hr/>
+      
+  <%# PDF event actif %>
+  <% numGp = Event.find(@eventId).numero %>
+  <%= link_to "PDF",  classements_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
+
+
+   <% end %>
+
+

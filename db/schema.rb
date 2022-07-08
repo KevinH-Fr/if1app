@@ -46,6 +46,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "classecuries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "classements", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "divisions", force: :cascade do |t|
     t.string "nom"
     t.integer "numero"
@@ -92,6 +102,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
     t.index ["division_id"], name: "index_pilotes_on_division_id"
   end
 
+  create_table "resultats", force: :cascade do |t|
+    t.integer "qualification"
+    t.integer "course"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "pilote_id"
+    t.integer "event_id"
+    t.boolean "dotd"
+    t.boolean "mt"
+    t.decimal "score"
+    t.integer "ecurie"
+    t.index ["event_id"], name: "index_resultats_on_event_id"
+    t.index ["pilote_id"], name: "index_resultats_on_pilote_id"
+  end
+
   create_table "saisons", force: :cascade do |t|
     t.string "nom"
     t.integer "numeroSaison"
@@ -106,4 +131,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_06_224042) do
   add_foreign_key "events", "divisions"
   add_foreign_key "events", "saisons"
   add_foreign_key "pilotes", "divisions"
+  add_foreign_key "resultats", "events"
+  add_foreign_key "resultats", "pilotes"
 end

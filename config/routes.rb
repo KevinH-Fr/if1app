@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   resources :events
   resources :equipes
   resources :pilotes
+  resources :resultats
+  resources :classecuries
+  resources :classements
 
   get 'home/index'
   root 'home#index'
