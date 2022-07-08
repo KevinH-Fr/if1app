@@ -17,7 +17,9 @@ gem "sassc-rails"
 gem 'cloudinary'
 gem "hotwire-rails"
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+
+gem "wkhtmltopdf-binary", group: :development
+gem "wkhtmltopdf-heroku", group: :production
 
 
 group :development, :test do
