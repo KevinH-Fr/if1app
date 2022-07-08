@@ -37,24 +37,6 @@
     font-weight: bold;
 }
 
- /* format des image ecurie avec nom pilote au dessus : */
-
-.contenant {
-  position: relative;
-  text-align: left;
-  color: white;
- /* min-width: 100px;*/
-}
-
-.texte_centrer {
-  position: absolute;
-  top: 50%;
-  left: 8%;
-  transform: translate(0%, -50%);
-  font-weight: bold;
-  font-size: medium;
-}
-
 
 @font-face {
   font-family: 'F1regular';
@@ -77,3 +59,8 @@ textarea {
   font-size: medium;
 }
 
+th, td {
+   text-align: left;
+   font-weight: bold;
+   
+}
