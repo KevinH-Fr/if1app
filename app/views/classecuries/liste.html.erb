@@ -1,19 +1,17 @@
 <%= wicked_pdf_image_tag asset_url('/images/if1main.png'), style: "width: 150px;", class: "img-fluid rounded", id:"imgLogoIf1" %> 
 
+<br/>
 <h1> Classement Ecuries </h1>
-
+<br/>
    
-
 <% eventId = @eventId %>
 
 <% Event.find(eventId).date %>
 <% circuitId = Event.find(eventId).circuit_id %> 
 
-
   <% if Circuit.find(circuitId).drapeau.present? %>
     <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 100px; display: block", class: "img-fluid rounded", id:"imgDrapeau") %> 
   <% end %>
-
 
  <table width="600" style="margin-left:auto;margin-right:auto">
     <thead>
@@ -42,8 +40,7 @@
   </tbody>
 </table>
 
-
-  <hr/> <br/> <br/>
+<br/><hr/> <br/> 
 
   <%#= tableau data classement %>
 
@@ -94,9 +91,7 @@
 <%# bas de page depuis partial %>
 <%= render "shared/baspdf" %>
 
-
    PDF generation date:
 <%= Time.zone.now %>
-
 
 <% end %>

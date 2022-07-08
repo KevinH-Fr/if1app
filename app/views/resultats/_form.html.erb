@@ -51,6 +51,15 @@
     <%= form.button "Validate", formaction: new_resultat_path, 
         formmethod: :get, data: {turbo_frame: :score_field, 
         form_element_target: "submitbtn"} %>
+
+      <div>
+        <%= form.label :qualification, style: "display: block" %>
+        <%= form.select(:qualification, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                        11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 
+                        :selected => form.object.qualification, 
+                        :include_blank => true )%>
+      </div>
+ 
       <div>
           <%= form.label :course, style: "display: block" %>
           <%= form.select :course, Resultat.positions, 
@@ -144,15 +153,7 @@
                  :include_blank => true )%>
  </div>
 <br/>
-  <div>
-    <%= form.label :qualification, style: "display: block" %>
-    <%= form.select(:qualification, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                    11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 
-                    :selected => form.object.qualification, 
-                    :include_blank => true )%>
-  </div>
  
-  <br/>
 
   <div>
      <%= form.submit "Valider", class:"btn btn-success" %>
