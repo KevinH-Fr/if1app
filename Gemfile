@@ -34,7 +34,6 @@ end
 
 group :production do
   gem 'pg', '~> 1.4', '>= 1.4.1'
-  gem "wkhtmltopdf-heroku"
 end
 
 group :test do
