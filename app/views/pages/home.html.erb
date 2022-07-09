@@ -1,16 +1,24 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
 
 <% if current_user %>
-    <p> Hello <% current_user.email %>!</p>
-    <p> Vous êtes connecté en tant que <%= current_user.role %> </p>
-    <p> Vous êtes bien authentifié avec votre compte Devise. </p>
+  
+    <%# partial accueil  %>
+    <%= render "home/accueil" %>
+
+    Hello <strong> <%= current_user.email %> </strong> !
+    <p> Vous êtes connecté en tant que <strong><%= current_user.role %> </strong>. </p>
     <p> Vous pouvez désormais parcourir l'application.</p>
-<%= link_to "Déconnexion", destroy_user_session_path, 'data-turbo-method': :delete %>
+
+    <% if current_user.admin? %>
+      Il y a <strong> <%= User.count %> </strong> users dans le système.
+    <% end %>
+
+<br/>
+<%= link_to "Déconnexion", destroy_user_session_path, 'data-turbo-method': :delete, class:"btn btn-outline-danger" %>
 
 <% else %>
-    <p> Vous n'êtes pas connecté </p>
-    <%= link_to "Créer un compte", new_user_registration_path %>
-    <br/>
-    <%= link_to "Login", new_user_session_path %>
+    <h1>Connexion</h1>
+    <p> Vous n'êtes pas connecté(e). </p>
+    <%= link_to "Login", new_user_session_path, class:"btn btn-primary" %>
+    <br/> <br/>
+    <%= link_to "Créer un compte", new_user_registration_path, class:"btn btn-warning" %>
 <% end %>
