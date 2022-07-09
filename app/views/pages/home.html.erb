@@ -1,0 +1,13 @@
+<h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+
+<% if current_user %>
+    <p> Hello <% current_user.email %>!</p>
+    <p> Vous êtes bien authentifié avec votre compte Devise. </p>
+    <p> Vous pouvez désormais parcourir l'application.</p>
+<% else %>
+    <p> Vous n'êtes pas connecté </p>
+    <%= link_to "Créer un compte", new_user_registration_path %>
+    <br/>
+    <%= link_to "Login", new_user_session_path %>
+<% end %>

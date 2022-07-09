@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  root 'pages#home'
+
+  devise_for :users
   resources :friends
   resources :saisons
   resources :divisions
@@ -11,7 +15,8 @@ Rails.application.routes.draw do
   resources :classements
 
   get 'home/index'
-  root 'home#index'
+ # root 'home#index'
+ 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
