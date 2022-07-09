@@ -96,23 +96,27 @@
               <% divisionLiee = pilote.division_id %>
               <% numDivision = Division.find(divisionLiee).numero %>
                 <% if numDivision == 1 %>
-                      <ul class="darkred">
+                      <div class="darkred">
                         <%= Division.find(divisionLiee).nom %>
+                      </div>
                   <% else %>
                     <% if numDivision == 2 %>
-                      <ul class="blue">
+                      <div class="blue">
                         <%= Division.find(divisionLiee).nom %>
+                      </div>
                       <% end %>
                   <% end %>
           </td>
 
            <td>
               <% if pilote.statut == "actif" %>
-                  <ul class="green">
+                  <div class="green">
                       <%= pilote.statut %>
+                  </div>
               <% else %>
-                  <ul class="red">
+                  <div class="red">
                       <%= pilote.statut %>
+                  </div>
               <% end %> 
           </td>
 
