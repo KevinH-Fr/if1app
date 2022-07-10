@@ -1,9 +1,15 @@
-<h1>New resultat</h1>
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
 
-<%= render "form", resultat: @resultat %>
+    <h1>Nouveau resultat</h1>
+    <%= render "form", resultat: @resultat %>
+    <br>
 
-<br>
+    <div>
+      <%= link_to "Retour resultats", resultats_path %>
+    </div>
 
-<div>
-  <%= link_to "Back to resultats", resultats_path %>
-</div>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+<% end %>

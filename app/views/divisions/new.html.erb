@@ -1,9 +1,15 @@
-<h1>Nouvelle division</h1>
+ <% if user_signed_in? %>
+    <% if current_user.admin? %>
 
-<%= render "form", division: @division %>
+    <h1>Nouvelle division</h1>
 
-<br>
+    <%= render "form", division: @division %>
+    <br>
+    <div>
+      <%= link_to "Retour divisions", divisions_path, class:"btn btn-secondary" %>
+    </div>
 
-<div>
-  <%= link_to "Retour", divisions_path, class:"btn btn-secondary" %>
-</div>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+<% end %>

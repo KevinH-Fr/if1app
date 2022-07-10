@@ -1,10 +1,16 @@
-<h1>Editer equipe</h1>
+ <% if user_signed_in? %>
+  <% if current_user.admin? %>  
+    <h1>Editer equipe</h1>
 
-<%= render "form", equipe: @equipe %>
+      <%= render "form", equipe: @equipe %>
+      <br>
 
-<br>
+      <div>
+        <%= link_to "", @equipe, class:"fa-solid fa-eye btn btn-primary" %> |
+        <%= link_to "", equipes_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary"  %>
+      </div>
+    <% end %>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
 
-<div>
-  <%= link_to "", @equipe, class:"fa-solid fa-eye btn btn-primary" %> |
-  <%= link_to "", equipes_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary"  %>
-</div>

@@ -1,9 +1,13 @@
-<h1>Nouveau circuit</h1>
+ <% if user_signed_in? %>
+    <% if current_user.admin? %>
 
-<%= render "form", circuit: @circuit %>
+    <h1>Nouveau circuit</h1>
 
-<br>
-
-<div>
-  <%= link_to "Back to circuits", circuits_path %>
-</div>
+    <%= render "form", circuit: @circuit %>
+    <br>
+    <div>
+      <%= link_to "Retour circuits", circuits_path %>
+    </div>
+  <% end %>
+  Vous n'avez pas les droits...
+<% end %>

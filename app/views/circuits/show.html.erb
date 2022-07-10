@@ -1,16 +1,24 @@
-<p style="color: green"><%= notice %></p>
+ <% if user_signed_in? %>
 
-<%= render @circuit %>
+    <p style="color: green"><%= notice %></p>
 
- <%= image_tag(@circuit.drapeau, style: "width: 200px; display: block", class: "img-fluid rounded") if @circuit.drapeau.attached? %>
-  <br/><hr/><br/>
- <%= image_tag(@circuit.carte, style: "width: 200px; display: block", class: "img-fluid rounded") if @circuit.carte.attached? %>
+    <%= render @circuit %>
 
+    <%= image_tag(@circuit.drapeau, style: "width: 200px; display: block", class: "img-fluid rounded") if @circuit.drapeau.attached? %>
+      <br/><hr/><br/>
+    <%= image_tag(@circuit.carte, style: "width: 200px; display: block", class: "img-fluid rounded") if @circuit.carte.attached? %>
 
-<div>
- <br/>
-  <%= link_to "", edit_circuit_path(@circuit), class:"fa-regular fa-pen-to-square btn btn-primary" %> |
-  <%= link_to "", circuits_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary" %>
- <br/><hr/>
-  <%= button_to "", @circuit, class:"fa-solid fa-trash-can btn btn-danger", method: :delete %>
-</div>
+    <div>
+    <br/>
+     <%= link_to "", circuits_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary" %>
+         <br/>
+    <% if current_user.admin? %>
+        <%= link_to "", edit_circuit_path(@circuit), class:"fa-regular fa-pen-to-square btn btn-primary" %> |
+      <br/><hr/>
+        <%= button_to "", @circuit, class:"fa-solid fa-trash-can btn btn-danger", method: :delete %>
+      </div>
+    <% end %>
+<% else %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+<% end %>

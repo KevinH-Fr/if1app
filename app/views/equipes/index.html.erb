@@ -1,4 +1,4 @@
-<%# if user_signed_in? %>
+<% if user_signed_in? %>
 
 <br/>
 
@@ -38,15 +38,12 @@
       </tbody>
     </table>
   </div>
-
   <br>
 
+<% if current_user.admin? %>
   <%= link_to "Nouvelle equipe", new_equipe_path, class:"btn btn-primary" %>
- <br> <br>
-  <%= link_to "PDF", equipes_path(format: :pdf), class:"btn btn-dark" %>
+ <br> 
+<% end %>
 
-<%#else %>
-
- 
-  
-<%# end %>
+  <br/>   <strong>Vous n'avez pas les droits...</strong>
+<% end %>

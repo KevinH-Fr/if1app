@@ -1,12 +1,17 @@
-<h1>Nouveau pilote</h1>
- <hr/> <br/>
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
 
-<%= render "form", pilote: @pilote %>
+    <h1>Nouveau pilote</h1>
+    <hr/> 
+    <%= render "form", pilote: @pilote %>
 
-<br>
+    <hr/> <br/>
 
-<hr/> <br/>
+    <div>
+      <%= link_to "Retour pilotes", pilotes_path, class:"btn btn-secondary" %>
+    </div>
 
-<div>
-  <%= link_to "Retour", pilotes_path, class:"btn btn-secondary" %>
-</div>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+<% end %>

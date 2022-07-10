@@ -1,10 +1,18 @@
-<h1>Editer event</h1>
+ <% if user_signed_in? %>
+  <% if current_user.admin? %>
 
-<%= render "form", event: @event %>
+      <h1>Editer event</h1>
 
-<br>
+      <%= render "form", event: @event %>
+      <br>
 
-<div>
-   <%= link_to "", @event, class:"fa-solid fa-eye btn btn-primary" %> |
-  <%= link_to "", events_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary"  %>
-</div>
+      <div>
+        <%= link_to "", @event, class:"fa-solid fa-eye btn btn-primary" %> |
+        <%= link_to "", events_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary"  %>
+      </div>
+    <% end %>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+
+

@@ -9,20 +9,13 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+         <%#  <li class="nav-item">
       	<%= link_to 'A propos',
       		home_index_path, class:"nav-link" %> 
-      </li>
+      
 
          <% if user_signed_in? %>
-            <li class="nav-item">
-               <%= link_to 'Saisons',
-               saisons_path, class:"nav-link" %> 
-            </li>
-            <li class="nav-item">
-               <%= link_to 'Divisions',
-               divisions_path, class:"nav-link" %> 
-            </li>
+           
             <li class="nav-item">
                <%= link_to 'Circuits',
                circuits_path, class:"nav-link" %> 
@@ -30,10 +23,6 @@
             <li class="nav-item">
                <%= link_to 'Events',
                events_path, class:"nav-link" %> 
-            </li>
-            <li class="nav-item">
-               <%= link_to 'Equipes',
-               equipes_path, class:"nav-link" %> 
             </li>
             <li class="nav-item">
                <%= link_to 'Pilotes',
@@ -52,15 +41,26 @@
                classecuries_path, class:"nav-link" %> 
             </li>
                <% if current_user.admin? %>
-                 <%= link_to 'Admin', 'home/users', class:"nav-link text-warning" %>
-               <% end %>
-            <li class="nav-item">
-               <%= link_to '', destroy_user_session_path, class:"nav-link fa-solid fa-xl fa-right-from-bracket", 
-                  'data-turbo-method': :delete %>
-            </li>
-
-
-
+                  <li class="nav-item">
+                     <%= link_to 'Saisons',
+                     saisons_path, class:"nav-link" %> 
+                  </li>
+                  <li class="nav-item">
+                     <%= link_to 'Divisions',
+                     divisions_path, class:"nav-link" %> 
+                  </li>
+                  <li class="nav-item">
+                     <%= link_to 'Equipes',
+                     equipes_path, class:"nav-link" %> 
+                  </li>
+                  <li class="nav-item">
+                     <%= link_to 'Admin', 'home/users', class:"nav-link text-warning" %>
+                     <% end %>
+                  </li>
+                  <li class="nav-item">
+                     <%= link_to '', destroy_user_session_path, class:"nav-link fa-solid fa-xl fa-right-from-bracket", 
+                        'data-turbo-method': :delete %>
+                  </li>
          <% else %>
             <li class="nav-item">
                <%= link_to 'Connexion',

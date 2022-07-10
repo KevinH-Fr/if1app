@@ -1,9 +1,15 @@
-<h1>Nouvelle equipe</h1>
+<% if user_signed_in? %>
+  <% if current_user.admin? %>
 
-<%= render "form", equipe: @equipe %>
+    <h1>Nouvelle equipe</h1>
 
-<br>
+    <%= render "form", equipe: @equipe %>
+    <br>
+    <div>
+      <%= link_to "Retour equipes", equipes_path %>
+    </div>
 
-<div>
-  <%= link_to "Back to equipes", equipes_path %>
-</div>
+  <% end %>
+  <br/>
+  <strong>Vous n'avez pas les droits...</strong>
+<% end %>

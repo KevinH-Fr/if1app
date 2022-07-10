@@ -1,5 +1,5 @@
 
-<%# if user_signed_in? %>
+<% if user_signed_in? %>
 
 <br/>
 
@@ -42,12 +42,11 @@
 
   <br>
 
-  <%= link_to "Nouvelle division", new_division_path, class:"btn btn-primary" %>
+<% end %>
 
+<%= link_to "Nouvelle division", new_division_path, class:"btn btn-primary" %>
 
-<%# else %>
-
-
-  
-<%# end %>
+<% if current_user.admin? %>
+  <br/>   <strong>Vous n'avez pas les droits...</strong>
+<% end %>
 
