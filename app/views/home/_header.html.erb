@@ -51,10 +51,16 @@
                <%= link_to 'Classement Ecuries',
                classecuries_path, class:"nav-link" %> 
             </li>
+               <% if current_user.admin? %>
+                 <%= link_to 'Admin', 'home/users', class:"nav-link text-warning" %>
+               <% end %>
             <li class="nav-item">
-               <%= link_to 'Déconnexion',
-               destroy_user_session_path, class:"nav-link", 'data-turbo-method': :delete %>
+               <%= link_to '', destroy_user_session_path, class:"nav-link fa-solid fa-xl fa-right-from-bracket", 
+                  'data-turbo-method': :delete %>
             </li>
+
+
+
          <% else %>
             <li class="nav-item">
                <%= link_to 'Connexion',

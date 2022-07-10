@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :classements
 
   get 'home/index'
+  get 'home/users'
  # root 'home#index'
  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
