@@ -99,7 +99,7 @@ class ResultatsController < ApplicationController
 
     respond_to do |format|
       if @resultat.save
-        format.html { redirect_to resultat_url(@resultat), notice: "Resultat was successfully created." }
+        format.html { redirect_to resultat_url(@resultat), notice: "Le résultat a bien été créé." }
         format.json { render :show, status: :created, location: @resultat }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -118,7 +118,7 @@ class ResultatsController < ApplicationController
 
     respond_to do |format|
       if @resultat.update(resultat_params)
-        format.html { redirect_to resultat_url(@resultat), notice: "Resultat was successfully updated." }
+        format.html { redirect_to resultat_url(@resultat), notice: "Le résultat a bien été mis à jour." }
         format.json { render :show, status: :ok, location: @resultat }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -132,7 +132,7 @@ class ResultatsController < ApplicationController
     @resultat.destroy
 
     respond_to do |format|
-      format.html { redirect_to resultats_url, notice: "Resultat was successfully destroyed." }
+      format.html { redirect_to resultats_url, notice: "Le résultat a bien été détruit." }
       format.json { head :no_content }
     end
   end

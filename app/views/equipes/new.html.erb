@@ -6,10 +6,10 @@
     <%= render "form", equipe: @equipe %>
     <br>
     <div>
-      <%= link_to "Retour equipes", equipes_path %>
+      <%= link_to "Retour equipes", equipes_path, class:"btn btn-secondary" %>
     </div>
 
+  <% else %>
+    <br/> <strong>Vous n'avez pas les droits...</strong>
   <% end %>
-  <br/>
-  <strong>Vous n'avez pas les droits...</strong>
 <% end %>
