@@ -17,7 +17,7 @@
         <%# btn choix division %>
         Choix division |
         <% @divisions.each do |division| %>
-          <%= link_to "D#{division.numero}", 
+          <%= link_to "#{division.nom}", 
               classecuries_path(saisonId: @saisonId, divisionId: division.id), 
               class:"btn btn-dark", :method => :post %> 
         <% end %>

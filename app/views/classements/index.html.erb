@@ -1,6 +1,6 @@
 
 <% if user_signed_in? %>
-  <h1>Classements</h1>  <br/>
+  <h1>Classements Pilotes</h1>  <br/>
 
   <%# btn choix saison %>
     Choix saison |
@@ -16,7 +16,7 @@
           <%# btn choix division %>
           Choix division |
           <% @divisions.each do |division| %>
-            <%= link_to "D#{division.numero}", 
+            <%= link_to "#{division.nom}", 
                 classements_path(saisonId: @saisonId, divisionId: division.id), 
                 class:"btn btn-dark", :method => :post %> 
           <% end %>
