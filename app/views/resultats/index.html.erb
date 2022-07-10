@@ -16,7 +16,7 @@
             <%# btn choix division %>
             Choix division |
             <% @divisions.each do |division| %>
-              <%= link_to "D#{division.numero}", 
+              <%= link_to "#{division.nom}", 
                   resultats_path(saisonId: @saisonId, divisionId: division.id), 
                   class:"btn btn-dark", :method => :post %> 
             <% end %>
@@ -45,6 +45,7 @@
 
       <% if current_user.admin? %>
           <%= link_to "Nouveau résultat", new_resultat_path, class:"btn btn-primary" %>
+          <br/><br/>
       <% end %>
 
       <%# entete event %>
@@ -76,13 +77,13 @@
                       <% circuitId = Event.find(@eventId).circuit_id %> 
                       <%= Circuit.find(circuitId).pays %>
                 </td>
-                <td width="60">
+                <td>
                   <% if (Circuit.find(circuitId).drapeau).blank? %>
                   <% else %>
                     <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 50px; display: block", class: "img-fluid rounded") %> 
                   <% end %>
                 </td>
-                <td width="60">
+                <td>
                   <% if (Circuit.find(circuitId).carte).blank? %>
                   <% else %>
                       <%= image_tag(Circuit.find(circuitId).carte, style: "width: 50px; display: block", class: "img-fluid rounded") %>  
@@ -90,7 +91,7 @@
                 </td>
                 <td>
                     <% divisionId = Event.find(@eventId).division_id %> 
-                    <%= Division.find(divisionId).numero %>
+                    <%= Division.find(divisionId).nom %>
                 </td>
               </tr>
           </tbody>
@@ -133,8 +134,8 @@
                   <% end %>
                 </td>
 
-              <td> <%= res.qualification %>  </td>
-              <td> <%= res.course %>    </td>
+              <td class="col_centree"><%= res.qualification %>  </td>
+              <td class="col_centree"> <%= res.course %>    </td>
 
                 <td> 
                       <% if res.dotd == true %>
@@ -153,17 +154,17 @@
                     </td>
 
                     <%#= points %>
-                    <td class="fw-bold fs-xl"> <%= res.score.to_i %>    </td>
+                   <td class="col_centree"> <%= res.score.to_i %>    </td>
 
                       <%#= actions %>
-                      <td>
+                      <td class="col_actions">
                           <%= link_to '', res, class:"fa-solid fa-eye btn btn-primary" %> 
                       </td>
                           <% if current_user.admin? %>
-                              <td>
+                              <td class="col_actions">
                                 <%= link_to "", edit_resultat_path(res), class:"fa-regular fa-pen-to-square btn btn-warning" %> 
                               </td> 
-                              <td>
+                              <td class="col_actions">
                                 <%= button_to '', res, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>
                               </td> 
                           <% end %>

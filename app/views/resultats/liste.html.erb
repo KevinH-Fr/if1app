@@ -15,7 +15,6 @@
     <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 100px; display: block", class: "img-fluid rounded", id:"imgDrapeau") %> 
   <% end %>
 
-
  <table width="600" style="margin-left:auto;margin-right:auto">
     <thead>
       <tr>
@@ -40,14 +39,14 @@
         </td>
          <td class="val_entete">
           <% divisionId = Event.find(eventId).division_id %> 
-          <%= Division.find(divisionId).numero %>
+          <%= Division.find(divisionId).nom %>
         </td>
       
       </tr>
   </tbody>
 </table>
 
- <br/> <hr/> <br/> 
+ <hr/> 
 
   <%#= tableau data classement %>
 
@@ -58,15 +57,24 @@
       <table style="margin-left:auto;margin-right:auto">
         <thead class="table-dark">
           <tr>
+            <th class="cols_hide"></th>
             <th>#</th>
             <th>Pilote</th>
             <th>Points</th>
+            <th class="cols_hide"></th>
           </tr>
         </thead>
 
            <tbody>
      <% @resultatsFiltres.each_with_index do | res| %>
      <tr>
+
+         <td>
+              <% if res.dotd == true %>
+                <%= wicked_pdf_image_tag asset_url('/images/dotd_white.png'), style: "width: 28px; margin-top: 4px;" %>
+              <% end %>
+           </td>
+
         <td class="cols_pos_score">
            <strong>  
               <%= res.course %> 
@@ -78,32 +86,27 @@
               <% idPilote = res.pilote_id %> 
               <% idEcurie = res.ecurie %> 
               <% nomPilote = Pilote.find(idPilote).nom %> 
-                <%= image_tag Equipe.find(idEcurie).logo, style: "width: 400px; display: block", class: "img-fluid rounded" %>
+                <%= image_tag Equipe.find(idEcurie).logo, style: "width: 340px; display: block", class: "img-fluid rounded" %>
                       <div class="texte_centrer">
                         <%= nomPilote %>
                       </div>
                   </div>
-
           </td> 
-      
-               <td class="cols_pos_score">
-                  <strong>  
-                      <%= res.score.to_i %> 
-                    </strong> 
-                </td>
+           <td class="cols_pos_score">
+              <strong> <%= res.score.to_i %> </strong> 
+           </td>
+           <td>
+              <% if res.mt == true %>
+                 <%= wicked_pdf_image_tag asset_url('/images/mt_white.png'),style: "width: 28px; margin-top: 4px;" %>
+              <% end %>
+           </td>
         </tr>
       <% end %> 
     </tbody>  
     
   </table>
 
-  <br/>
-
 <%# bas de page depuis partial %>
 <%= render "shared/baspdf" %>
-
-PDF generation date:
-<%= Time.zone.now %>
-
 
 <% end %>

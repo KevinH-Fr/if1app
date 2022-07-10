@@ -33,6 +33,14 @@
       </div>
   </div>
 
+  <div>
+    <%= form.label :event, style: "display: block" %>
+    <%= form.select(:event_id, options_from_collection_for_select(
+                  @event,'id', 'formatted_name', 
+                 :selected => form.object.event_id), 
+                 :include_blank => true )%>
+ </div>
+
   <%= turbo_frame_tag :ecurie_field do %>
     <div>
 
@@ -53,6 +61,7 @@
         form_element_target: "submitbtn"} %>
 
       <div>
+        <br/>
         <%= form.label :qualification, style: "display: block" %>
         <%= form.select(:qualification, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                         11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 
@@ -67,11 +76,11 @@
       </div>
 
        <div>
-          <%= form.label :dotd, style: "display: block" %>
+          <%= form.label :"Pilote du jour", style: "display: block" %>
           <%= form.check_box :dotd, { data: { action: "change->form-element#remotesubmit"}} %>
       </div>
        <div>
-          <%= form.label :mt, style: "display: block" %>
+          <%= form.label :"Meilleur tour", style: "display: block" %>
           <%= form.check_box :mt,{ data: { action: "change->form-element#remotesubmit"}} %>
       </div>
   </div>
@@ -145,17 +154,13 @@
       </div>
   <% end %>
 
-  <div>
-    <%= form.label :event, style: "display: block" %>
-    <%= form.select(:event_id, options_from_collection_for_select(
-                  @event,'id', 'formatted_name', 
-                 :selected => form.object.event_id), 
-                 :include_blank => true )%>
- </div>
+  <%# points manuels %>
+  <%#= link_to "Points manuels", "", class:"btn btn-outline-danger" %>
+
 <br/>
- 
 
   <div>
+    
      <%= form.submit "Valider", class:"btn btn-success" %>
   </div>
 <% end %>

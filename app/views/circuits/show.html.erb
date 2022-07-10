@@ -9,14 +9,20 @@
     <%= image_tag(@circuit.carte, style: "width: 200px; display: block", class: "img-fluid rounded") if @circuit.carte.attached? %>
 
     <div>
-    <br/>
      <%= link_to "", circuits_path, class:"fa-solid fa-arrow-rotate-left btn btn-secondary" %>
-         <br/>
+         <br/> <br/>
     <% if current_user.admin? %>
-        <%= link_to "", edit_circuit_path(@circuit), class:"fa-regular fa-pen-to-square btn btn-primary" %> |
-      <br/><hr/>
-        <%= button_to "", @circuit, class:"fa-solid fa-trash-can btn btn-danger", method: :delete %>
-      </div>
+      <table>
+        <tr>
+          <td>
+            <%= link_to "", edit_circuit_path(@circuit), class:"fa-regular fa-pen-to-square btn btn-primary" %>
+          </td>
+          <td> | </td>
+          <td>
+          <%= button_to "", @circuit, class:"fa-solid fa-trash-can btn btn-danger", method: :delete %>
+          </td>
+        </tr>
+      </table>
     <% end %>
 <% else %>
   <br/>

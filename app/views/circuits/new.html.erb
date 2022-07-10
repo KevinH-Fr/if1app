@@ -6,8 +6,9 @@
     <%= render "form", circuit: @circuit %>
     <br>
     <div>
-      <%= link_to "Retour circuits", circuits_path %>
+      <%= link_to "Retour circuits", circuits_path, class:"btn btn-secondary" %>
     </div>
+  <% else %>
+    <br/> <strong>Vous n'avez pas les droits...</strong>
   <% end %>
-  Vous n'avez pas les droits...
 <% end %>

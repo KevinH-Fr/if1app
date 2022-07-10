@@ -14,6 +14,7 @@
   <div>
     <%= form.label :nom, style: "display: block" %>
     <%= form.text_field :nom %>
+      <br/><br/>
   </div>
 
   <div class="field">
@@ -27,15 +28,8 @@
     <%= form.file_field :voiture %>
   </div>
 
-
-
-
   <div>
-    <%= form.label :text, style: "display: block" %>
-    <%= form.text_area :text %>
-  </div>
-
-  <div>
+    <br/>
      <%= form.submit "Valider", class:"btn btn-success" %>
   </div>
 <% end %>

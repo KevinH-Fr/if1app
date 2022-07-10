@@ -96,7 +96,9 @@
                       <div class="blue">
                         <%= Division.find(divisionLiee).nom %>
                       </div>
-                      <% end %>
+                      <% else %>
+                         <%= Division.find(divisionLiee).nom %>
+                    <% end %>
                   <% end %>
           </td>
 
@@ -112,15 +114,15 @@
               <% end %> 
           </td>
 
-          <td>
+          <td class="col_actions">
               <%= link_to '', pilote, class:"fa-solid fa-eye btn btn-primary" %> 
           </td>
             
              <% if current_user.admin? %>
-                 <td>
+                 <td class="col_actions">
                     <%= link_to '', edit_pilote_path(pilote), class:"fa-regular fa-pen-to-square btn btn-secondary" %> 
                 </td> 
-                <td>
+                <td class="col_actions">
                     <%= button_to '', pilote, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>
                 </td> 
             <% end %>
@@ -132,7 +134,7 @@
   </div>
 
  <%= paginate @pilotes, outer_window: 3 %>
-  <br/> <hr/> 
+   <hr/> 
 
     <% if current_user.admin? %>
         <%= link_to "Nouveau pilote", new_pilote_path, class:"btn btn-primary" %>

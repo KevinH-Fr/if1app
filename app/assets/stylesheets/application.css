@@ -48,4 +48,13 @@ textarea {
 th, td {
    text-align: left;
    font-weight: bold;
+   max-width: 50px;
+}
+
+.col_actions {
+  max-width: 20px;
+}
+
+.col_centree{
+  text-align: center;
 }

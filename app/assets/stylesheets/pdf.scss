@@ -9,7 +9,7 @@ body {
 }
 
 th, td {
-   // border: 1px solid rgb(44, 43, 43);
+    border: 3px solid #313130;
     text-align: center;
     font-weight: bold;
     font-family: 'F1regular';
@@ -34,9 +34,12 @@ th {
     background-color: rgb(255, 255, 255);
     width: 80px;
     font-weight: bold;
-    font-size: large;
+    font-size: x-large;
     color: rgb(0, 0, 0);
-   
+ }
+
+ .cols_hide {
+  background-color: #313130;
  }
 
  /* format des image ecurie avec nom pilote au dessus : */
@@ -51,8 +54,8 @@ th {
   
   .texte_centrer {
     position: absolute;
-    top: 8%;
-    left: 25%;
+    top: 5%;
+    left: 30%;
     transform: translate(0%, -50%);
     font-weight: bold;
     font-size: x-large;
