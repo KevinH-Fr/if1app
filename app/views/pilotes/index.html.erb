@@ -12,38 +12,14 @@
       </div>
       <div class="col-md-auto">
           <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.search_field :nom_or_statut_or_division_id_cont, placeholder: "Recherche...",
+              <%= f.search_field :nom_cont, placeholder: "Recherche...",
                   class: "form-control me-2" %>
               <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
           <% end %>
       </div>
-      <div class="col-md-auto">
-          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.hidden_field :statut_eq, value: "actif" %>
-              <%= f.submit "Actif", class:"btn btn-success" %>
-          <% end %>
-      </div>
-      <div class="col-md-auto">
-          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.hidden_field :statut_eq, value: "inactif" %>
-              <%= f.submit "Inactif", class:"btn btn-danger" %>
-          <% end %>
-      </div>
-          <% @divisions.each do |division| %>
-              <div class="col-md-auto">
-                  <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-                      <%= f.hidden_field :division_id_eq, value: division.id %>
-                      <%= f.submit division.nom, class:"btn btn-dark" %>
-                  <% end %>
-              </div>
-          <% end %>
-          <div class="col-md-auto">
-              <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-                  <%= f.hidden_field :statut_eq, value: "" %>
-                  <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
-              <% end %>
-          </div>
-      </div>
+     
+
+    </div>
   </div>
 
   <hr/> 
@@ -53,7 +29,6 @@
 
   <div class="table-responsive">
    <table  class="table table-striped table-bordered table-hover"> 
- 
       <thead class="table-dark">
       <tr>
         <th><%= sort_link(@q, :nom, "Nom", default_order: :asc) %></th>
