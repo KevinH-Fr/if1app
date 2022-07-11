@@ -10,7 +10,6 @@
       <div class="col-md-auto">
           <strong> total: <%= @countPilotes %> </strong>
       </div>
-
       <div class="col-md-auto">
           <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
               <%= f.search_field :nom_or_statut_or_division_id_cont, placeholder: "Recherche...",
@@ -18,7 +17,6 @@
               <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
           <% end %>
       </div>
-    
       <div class="col-md-auto">
           <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
               <%= f.hidden_field :statut_eq, value: "actif" %>
@@ -31,7 +29,6 @@
               <%= f.submit "Inactif", class:"btn btn-danger" %>
           <% end %>
       </div>
-      
           <% @divisions.each do |division| %>
               <div class="col-md-auto">
                   <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
@@ -40,22 +37,20 @@
                   <% end %>
               </div>
           <% end %>
-
           <div class="col-md-auto">
               <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
                   <%= f.hidden_field :statut_eq, value: "" %>
                   <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
               <% end %>
           </div>
-
       </div>
   </div>
 
-      <hr/> 
+  <hr/> 
+
 
   <%# tableau datas %>
 
-  <%# <table class="table table-striped table-bordered table-hover"> %>
   <div class="table-responsive">
    <table  class="table table-striped table-bordered table-hover"> 
  

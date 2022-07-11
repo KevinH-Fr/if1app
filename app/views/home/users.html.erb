@@ -13,6 +13,7 @@
       <tr>
         <th> # </th>
         <th> email </th>
+       
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
         <tr>
             <td> <%= admin.id %>    </td>
             <td> <%= admin.email %> </td>
+           
         </tr>
       <% end %>
     </tbody>
@@ -37,6 +39,8 @@
       <tr>
         <th> # </th>
         <th> email </th>
+        <th> Action </th>
+    
       </tr>
     </thead>
     <tbody>
@@ -44,6 +48,23 @@
         <tr>
             <td> <%= user.id %>    </td>
             <td> <%= user.email %> </td>
+
+
+            <td> 
+              <% "changer statut" %>
+            
+              <%= link_to "Passer Admin",  edit_user_path(user), class:"btn btn-dark" %>
+
+             
+   
+            </td>
+
+
+             
+
+
+
+          
         </tr>
       <% end %>
     </tbody>
