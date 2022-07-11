@@ -53,7 +53,7 @@
             </li>
                <% if current_user.admin? %>
                   <li class="nav-item">
-                     <%= link_to 'Admin', 'home/users', class:"nav-link text-warning" %>
+                     <%= link_to 'Admin', users_path, class:"nav-link text-warning" %>
                   </li>
                <% end %>
                   <li class="nav-item">
