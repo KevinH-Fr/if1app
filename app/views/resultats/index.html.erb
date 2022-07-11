@@ -71,7 +71,8 @@
                     <%= Event.find(@eventId).numero %>
                 </td>
                 <td>
-                    <%= Event.find(@eventId).date %>
+                  <% datetime = Event.find(@eventId).date.to_date %>
+                  <%= datetime.strftime("%d/%m/%y") %>
                 </td>
                 <td>
                       <% circuitId = Event.find(@eventId).circuit_id %> 

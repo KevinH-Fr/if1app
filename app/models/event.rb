@@ -11,7 +11,15 @@ class Event < ApplicationRecord
   
 
     def formatted_name
-        "#{date} | #{circuit_id} | #{division}"
-      end
+       datetime = date.to_date
+       datetime.strftime("%d/%m/%y")
+        "#{datetime} | #{circuit_id} | #{division}"
+    end
+
+    def formatted_name_bis
+      pays = Circuit.find(circuit_id).pays
+      datetime = date.to_date.strftime("%d/%m/%y")
+      "n°#{numero} - | #{pays} - | #{datetime}"
+    end 
 
 end

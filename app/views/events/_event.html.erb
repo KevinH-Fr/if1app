@@ -6,7 +6,8 @@
 
   <p>
     <strong>Date:</strong>
-    <%= event.date %>
+    <% datetime = event.date.to_date %>
+    <%= datetime.strftime("%d/%m/%y") %>
   </p>
 
   <p>

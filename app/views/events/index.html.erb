@@ -40,7 +40,11 @@
                 </td>
               <% end %>
 
-            <td> <%= event.date %>    </td>
+            <td> 
+              <% datetime = event.date.to_date %>
+              <%= datetime.strftime("%d/%m/%y") %>
+            </td>
+
             <td> <%= Division.find(event.division_id).nom %>    </td>
             
                   <td class="col_actions">
