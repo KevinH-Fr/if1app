@@ -1,46 +1,10 @@
-<%= wicked_pdf_image_tag asset_url('/images/if1main.png'), style: "width: 150px;", class: "img-fluid rounded", id:"imgLogoIf1" %> 
 
 <br/>
 <h1> Classement Ecuries </h1>
 <br/>
-   
-<% eventId = @eventId %>
 
-<% Event.find(eventId).date %>
-<% circuitId = Event.find(eventId).circuit_id %> 
-
-  <% if Circuit.find(circuitId).drapeau.present? %>
-    <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 100px; display: block", class: "img-fluid rounded", id:"imgDrapeau") %> 
-  <% end %>
-
- <table width="600" style="margin-left:auto;margin-right:auto">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Pays</th>
-        <th>Division</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td class="val_entete">
-            <%= Event.find(eventId).date %>
-        </td>
-        <td class="val_entete">
-          <% circuitId = Event.find(eventId).circuit_id %> 
-          <%= Circuit.find(circuitId).pays %>
-        </td>
-         <td class="val_entete">
-          <% divisionId = Event.find(eventId).division_id %> 
-          <%= Division.find(divisionId).numero %>
-        </td>
-      
-      </tr>
-  </tbody>
-</table>
-
-<br/><hr/> <br/> 
+<%# haut de page depuis partial %>
+<%= render "shared/hautpdf" %>
 
   <%#= tableau data classement %>
 
@@ -69,7 +33,7 @@
                   <div class="contenant">
                       <% equipeId = res[0] %>  
                       <% nomEcurie = Equipe.find(res[0]).nom %> 
-                      <%= image_tag Equipe.find(equipeId).logo, style: "width: 400px; display: block", class: "img-fluid rounded" %>
+                      <%= image_tag Equipe.find(equipeId).logo, style: "width: 340px; display: block", class: "img-fluid rounded" %>
                         <div class="texte_centrer">
                           <%= nomEcurie %> 
                         </div>
@@ -90,8 +54,5 @@
 
 <%# bas de page depuis partial %>
 <%= render "shared/baspdf" %>
-
-   PDF generation date:
-<%= Time.zone.now %>
 
 <% end %>
