@@ -22,18 +22,11 @@
             <div class="col-md-auto">
               <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
                 <%= f.search_field :nom_cont, placeholder: "Recherche...", class: "form-control me-2" %>
-                <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
+                <%= f.submit "Go!", class:"btn btn-outline-primary" %>
               <% end %>
             </div>
           </td>
-          <td>
-            <div class="col-md-auto">
-                <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-                    <%= f.hidden_field :statut_eq, value: "" %>
-                    <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
-                <% end %>
-            </div>
-          </td>
+          
         </tr>
       </table>
 
@@ -56,7 +49,13 @@
             </div>
           </td>
           
-            <% @divisions.each do |division| %>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+      
+           <% @divisions.each do |division| %>
               <td>
                 <div class="col-md-auto">
                     <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
@@ -66,6 +65,7 @@
                 </div>
               </td>
             <% end %>
+         
         </tr>
       </table>
 
@@ -79,6 +79,14 @@
                     </div>
                 </td>
                 <td>
+                
+                <div class="col-md-auto">
+                    <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                        <%= f.hidden_field :statut_eq, value: "" %>
+                        <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
+                    <% end %>
+                </div>
+          
                 </td>
             </tr>
         </table>
