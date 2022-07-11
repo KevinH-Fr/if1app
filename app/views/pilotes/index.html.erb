@@ -5,51 +5,88 @@
   <h1 class="fa-solid fa-user fa-2xl fw-bold fs-1"> - Pilotes </h1>   
   <br/>  <hr/>
 
+
+
+
   <div class="container">
     <div class="row">
-      <div class="col-md-auto">
-          <strong> total: <%= @countPilotes %> </strong>
-      </div>
-      <div class="col-md-auto">
-          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.search_field :nom_cont, placeholder: "Recherche...",
-                  class: "form-control me-2" %>
-              <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
-          <% end %>
-      </div>
-      
-      	<div class="col-md-auto">
-          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.hidden_field :statut_eq, value: "actif" %>
-              <%= f.submit "Actif", class:"btn btn-success" %>
-          <% end %>
-      </div>
-      <div class="col-md-auto">
-          <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-              <%= f.hidden_field :statut_eq, value: "inactif" %>
-              <%= f.submit "Inactif", class:"btn btn-danger" %>
-          <% end %>
-      </div>
-          <% @divisions.each do |division| %>
+      <table>
+        <tr>
+          <td>
+            <div class="row">
               <div class="col-md-auto">
-                  <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-                      <%= f.hidden_field :division_id_eq, value: division.id %>
-                      <%= f.submit division.nom, class:"btn btn-dark" %>
-                  <% end %>
-              </div>
-          <% end %>
-          <div class="col-md-auto">
+                <strong> total: <%= @countPilotes %> </strong>
+              </div>            
+          </td>
+          <td>
+            <div class="col-md-auto">
               <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
-                  <%= f.hidden_field :statut_eq, value: "" %>
-                  <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
+                <%= f.search_field :nom_cont, placeholder: "Recherche...", class: "form-control me-2" %>
+                <%= f.submit "Rechercher", class:"btn btn-outline-primary" %>
               <% end %>
-          </div>
+            </div>
+          </td>
+          <td>
+            <div class="col-md-auto">
+                <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                    <%= f.hidden_field :statut_eq, value: "" %>
+                    <%= f.submit "Effacer filtres", class:"btn btn-outline-danger" %>
+                <% end %>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td>
+            <div class="col-md-auto">
+              <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                <%= f.hidden_field :statut_eq, value: "actif" %>
+                <%= f.submit "Actif", class:"btn btn-success" %>
+              <% end %>
+            </div>
+          </td>
+          <td>
+           <div class="col-md-auto">
+                <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                    <%= f.hidden_field :statut_eq, value: "inactif" %>
+                    <%= f.submit "Inactif", class:"btn btn-danger" %>
+                <% end %>
+            </div>
+          </td>
+          
+            <% @divisions.each do |division| %>
+              <td>
+                <div class="col-md-auto">
+                    <%= search_form_for(@q, url: pilotes_path, method: :get, class:'d-flex') do |f| %>
+                        <%= f.hidden_field :division_id_eq, value: division.id %>
+                        <%= f.submit division.nom, class:"btn btn-dark" %>
+                    <% end %>
+                </div>
+              </td>
+            <% end %>
+        </tr>
+      </table>
+
+        <br>
+
+        <table> 
+            <tr>
+                <td>
+                    <div class="col-md-auto">
+                    <strong> filtre: <%= @pilotes.ransack(params[:q]).result.count %> </strong>
+                    </div>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
 
     </div>
   </div>
 
   <hr/> 
-
 
   <%# tableau datas %>
 
