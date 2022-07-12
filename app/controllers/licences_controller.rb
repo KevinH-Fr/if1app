@@ -4,26 +4,58 @@ class LicencesController < ApplicationController
   # GET /licences or /licences.json
   def index
     @licences = Licence.all
+
+    @saisons = Saison.all
+    @divisions = Division.all
+    @events = Event.all
+
+
+    if params[:saisonId]
+      @saisonId = params[:saisonId]
+    end
+
+    if params[:divisionId]
+      @divisionId = params[:divisionId]
+
+      @eventsFiltres = @events.where('saison_id = :saison_id AND division_id = :division_id',
+        saison_id: @saisonId, division_id: @divisionId)
+    end
+
+    if params[:eventId]
+      @eventId = params[:eventId]
+      @eventNum = Event.find(@eventId).numero 
+
+      @pilotes = Pilote.all
+      @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId) 
+
+      @licencesValDepart = 12
+
+      @licencesFiltres = Licence.group(:pilote_id)
+          .select('pilote_id, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
+         
+
+      
+    else
+      
+      @pilotesActifDiv = Pilote.all
+    end
+
   end
 
-  # GET /licences/1 or /licences/1.json
   def show
   end
 
-  # GET /licences/new
   def new
     @licence = Licence.new
     @pilote = Pilote.all
     @event = Event.all
   end
 
-  # GET /licences/1/edit
   def edit
     @pilote = Pilote.all
     @event = Event.all
   end
 
-  # POST /licences or /licences.json
   def create
     @licence = Licence.new(licence_params)
 
@@ -71,4 +103,6 @@ class LicencesController < ApplicationController
     def licence_params
       params.require(:licence).permit(:penalite, :recupere, :pilote_id, :event_id)
     end
+
+  
 end

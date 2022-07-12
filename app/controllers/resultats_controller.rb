@@ -30,15 +30,13 @@ class ResultatsController < ApplicationController
   
     if params[:eventId]
       @eventId = params[:eventId]
-
       @eventNum = Event.find(@eventId).numero 
 
-    
-        @resultatsFiltres = Resultat.joins(:event).where(
+     @resultatsFiltres = Resultat.joins(:event).where(
          'event_id = :event_id',
           event_id: @eventId)
         
-         @resultatsFiltres = @resultatsFiltres.order(:course)
+     @resultatsFiltres = @resultatsFiltres.order(:course)
 
       @divisionId = Event.find(@eventId).division_id 
 
