@@ -45,7 +45,7 @@
       <tr>
         <th> # </th>
         <th> email </th>
-        <th> Action </th>
+        <th> changer role </th>
     
       </tr>
     </thead>
@@ -54,7 +54,6 @@
         <tr>
             <td> <%= user.id %>    </td>
             <td> <%= user.email %> </td>
-
             <td> <%= link_to "Admin", toggle_status_user_path(user), class:"btn btn-secondary", 
                     :onclick => "return confirm('Etes-vous certain de vouloir passer cet utilisateur en admin ?')" %> </td> 
 
