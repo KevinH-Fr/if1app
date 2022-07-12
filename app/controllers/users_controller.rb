@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :toggle_status]
 
     def index
        # call_action
@@ -10,7 +11,6 @@ class UsersController < ApplicationController
 
     def edit
         @user = User.find(params[:id])
-    
     end
 
 
@@ -28,12 +28,18 @@ class UsersController < ApplicationController
     end
 
 
-    def scrape
-        @user = User.find(params[:id])
-        @user.role = 2
-        @user.save
+
+    def toggle_status
+
+      if @user.admin?
+        @user.user!
+      end
+      if @user.user?
+        @user.admin!
       end
 
+      redirect_to users_url, notice: "le rôle a bien été modifié"
+    end
 
 
       private
@@ -47,16 +53,9 @@ class UsersController < ApplicationController
         params.require(:user).permit(:nom, :role)
       end
 
-      def set_admin
-        @user = User.find(params[:id])
-        @user.role = 2
-        @user.save
+     
 
-        respond_to do |format|
-            format.html { redirect_to users_path, notice: "notif 2 vers admin" }
-        end
-
-    end
+   
 
      # Only allow a list of trusted parameters through.
      def user_params

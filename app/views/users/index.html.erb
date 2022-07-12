@@ -40,7 +40,7 @@
       <tr>
         <th> # </th>
         <th> email </th>
-       <%#  <th> Action </th> %>
+        <th> Action </th>
     
       </tr>
     </thead>
@@ -50,10 +50,12 @@
             <td> <%= user.id %>    </td>
             <td> <%= user.email %> </td>
 
-                 <%#= link_to '', user, class:"fa-solid fa-eye btn btn-primary" %> 
+            <%# link to call private action in controller %>
+            <td> <%= link_to user.role, toggle_status_user_path(user) %> </td>
 
-           
-            
+
+
+                 <%#= link_to '', user, class:"fa-solid fa-eye btn btn-primary" %>           
               <%#= link_to "Passer Admin",  edit_user_registration_path(user), class:"btn btn-dark" %>
               <%#= link_to "Passer Admin", edit_user_path(user), method: :call_action, class:"btn btn-dark" %>
 

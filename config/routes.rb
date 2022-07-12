@@ -3,7 +3,14 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   devise_for :users
-  resources :users, only: [:index, :show, :edit, :update]
+
+  resources :users do
+    member do
+      get :toggle_status
+    end
+  end
+
+
   resources :friends
   resources :saisons
   resources :divisions
