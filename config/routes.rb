@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :resultats
   resources :classecuries
   resources :classements
+  resources :licences
   
 
   get 'home/index'
