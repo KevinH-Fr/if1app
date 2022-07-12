@@ -33,8 +33,7 @@ class UsersController < ApplicationController
 
       if @user.admin?
         @user.user!
-      end
-      if @user.user?
+      elsif @user.user?
         @user.admin!
       end
 

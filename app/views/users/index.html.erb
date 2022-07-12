@@ -1,5 +1,5 @@
 
-<% @users = User.all %>
+<% @users = User.all.where(role: 0) %>
 <% @admins = User.all.where(role: 2) %>
 
 <br/>
@@ -13,15 +13,20 @@
       <tr>
         <th> # </th>
         <th> email </th>
+        <th>changer rôle</th>
        
        
       </tr>
     </thead>
     <tbody>
-      <% @admins.each do |admin| %>
+      <% @admins.each do |user| %>
         <tr>
-            <td> <%= admin.id %>    </td>
-            <td> <%= admin.email %> </td>
+            <td> <%= user.id %>    </td>
+            <td> <%= user.email %> </td>
+            <td> <%= link_to "User", toggle_status_user_path(user), class:"btn btn-secondary", 
+                  :onclick => "return confirm('Etes-vous certain de vouloir passer cet utilisateur en simple user ?')" %> </td>
+            
+           
            
         </tr>
       <% end %>
@@ -50,16 +55,9 @@
             <td> <%= user.id %>    </td>
             <td> <%= user.email %> </td>
 
-            <%# link to call private action in controller %>
-            <td> <%= link_to user.role, toggle_status_user_path(user) %> </td>
+            <td> <%= link_to "Admin", toggle_status_user_path(user), class:"btn btn-secondary", 
+                    :onclick => "return confirm('Etes-vous certain de vouloir passer cet utilisateur en admin ?')" %> </td> 
 
-
-
-                 <%#= link_to '', user, class:"fa-solid fa-eye btn btn-primary" %>           
-              <%#= link_to "Passer Admin",  edit_user_registration_path(user), class:"btn btn-dark" %>
-              <%#= link_to "Passer Admin", edit_user_path(user), method: :call_action, class:"btn btn-dark" %>
-
-          
         </tr>
       <% end %>
     </tbody>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  # route pour link to action user admin
   resources :users do
     member do
       get :toggle_status
@@ -28,11 +29,6 @@ Rails.application.routes.draw do
   get 'home/role'
 
 
-
  # root 'home#index'
- 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
