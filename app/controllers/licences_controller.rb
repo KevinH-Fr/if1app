@@ -1,14 +1,12 @@
 class LicencesController < ApplicationController
   before_action :set_licence, only:[:show, :edit, :update, :destroy]
 
-  # GET /licences or /licences.json
   def index
     @licences = Licence.all
 
     @saisons = Saison.all
     @divisions = Division.all
     @events = Event.all
-
 
     if params[:saisonId]
       @saisonId = params[:saisonId]
@@ -30,6 +28,8 @@ class LicencesController < ApplicationController
 
       @licencesValDepart = 12
 
+      @licencesEvent = Licence.all.where(event_id: @eventId)
+
       @licencesFiltres = Licence.joins(:event).where(
         'numero <= :numero AND 
          saison_id = :saison_id AND 
@@ -37,9 +37,8 @@ class LicencesController < ApplicationController
          numero: params[:numGp],
          saison_id: params[:saisonId],
          division_id: params[:divisionId]).group(:pilote_id)
-          .select('pilote_id, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
+          .select('pilote_id, event_id, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
          
-      
     else
       
       @pilotesActifDiv = Pilote.all
@@ -98,25 +97,23 @@ class LicencesController < ApplicationController
     end
   end
 
-
-def downgrade1
-
-    @eventId = params[:id]
-    @divisionLiee = Event.find(@eventId).division_id
-
-    @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionLiee) 
-    
+def toggle_creerlicence
+  @eventId = params[:id]
+  @divisionLiee = Event.find(@eventId).division_id
+  @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionLiee) 
     @pilotesActifDiv.all.each do |pilote|
-
-      # ici possible de rechercher les points gagnés ou perdus sur licence sur gp n-1 ?
-      # permet d'integrer le test sur les 3 derniers gp pour calcul recup ?
       licence = Licence.create(pilote_id: pilote.id, event_id: @eventId)
-    
     end
-    redirect_to licences_url, notice: "la licence a bien été créée"
-
+  
+  redirect_to licences_url, notice: "la licence2 a bien été créée"
 end
 
+def toggle_supprimerlicences
+  @eventId = params[:id]
+  Licence.where(event_id: @eventId).destroy_all
+
+  redirect_to licences_url, notice: "les licences de l'event courant ont bien été supprimées"
+end
 
 
 
@@ -131,8 +128,5 @@ end
     def licence_params
       params.require(:licence).permit(:penalite, :recupere, :pilote_id, :event_id)
     end
-
-
-
 
 end
