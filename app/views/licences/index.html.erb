@@ -7,6 +7,16 @@
       <br/> <br/> <hr/> <br/>
 
 
+  <% if (@eventId).present? %>
+  <% eventId = @eventId%>
+  <%= eventId%>
+
+ <%= link_to "Créer licences",  downgrade1_licence_path(eventId), class:"btn btn-secondary", :onclick => "return confirm('Créer les licences des titulaires ?')" %> 
+<% end %>
+
+
+
+
  <%# btn choix saison %>
       Choix saison |
         <% @saisons.each do |saison| %>
@@ -42,14 +52,34 @@
                       <%= link_to "GP #{event.numero}"" - #{nomPays}", 
                           licences_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
                           class:"btn btn-primary", :method => :post %> 
+
+                        <%#= link_to "Créer licences",  licences_downgrade1_path(eventId: 3), class:"btn btn-secondary", :onclick => "return confirm('Créer les licences des titulaires ?')" %> 
+
                     <% end %>
+                    
                   <% end %>
                 <% end %>
+
+                
+
               <% end %>
           <% end %>
       <hr/> 
 
   <% if (@eventId).present? %>
+  <% eventId = @eventId%>
+
+     <table>  
+          <%# @divisions.each do |division| %>
+            <tr>
+               <td> <%#= division.nom  %></td>
+                <td> <%#= link_to "Creer licence", toggle_licence_licence_path(division), class:"btn btn-secondary", 
+                      :onclick => "return confirm('Créer la licence ?')" %> </td>
+                  
+            </tr>
+          <%# end %>
+     </table>
+   <br>
 
    <%# table des situation licences pilotes titulaires %>
    <h5> Synthese des licences </h5> 
@@ -70,8 +100,9 @@
           <% @licencesFiltres.each_with_index do | licence, i| %>
           
             <td>
-              <%= Pilote.find(licence.pilote_id).nom  %>
-                  
+              <% if licence.pilote_id.present? %>
+                <%= Pilote.find(licence.pilote_id).nom  %>
+              <% end %>  
             </td>
             <td style="text-align: center;">
               <%= @licencesValDepart %>
@@ -84,7 +115,7 @@
             </td>
              <td style="text-align: center;">
               <strong>
-                <%= @licencesValDepart - licence.total_penalite + licence.total_recupere %>
+                <%= @licencesValDepart.to_i - licence.total_penalite.to_i + licence.total_recupere.to_i %>
               </strong>
             </td>
 
@@ -121,7 +152,9 @@
             
              <td> 
                 <% piloteLie = licence.pilote_id %>
-                <%= Pilote.find(piloteLie).nom %>
+                  <% if piloteLie.present? %>
+                    <%= Pilote.find(piloteLie).nom %>
+                  <% end %>
               </td>
 
               <td style="text-align: center;">  <%= licence.event_id %> </td>
@@ -149,6 +182,10 @@
 
   <% if current_user.admin? %>
    <%= link_to "Nouvelle licence", new_licence_path, class:"btn btn-primary" %>
+    <br><br>
+
+
+
   <% end %>
 
 <% else %>

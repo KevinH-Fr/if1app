@@ -1,5 +1,5 @@
 class LicencesController < ApplicationController
-  before_action :set_licence, only: %i[ show edit update destroy ]
+  before_action :set_licence, only:[:show, :edit, :update, :destroy]
 
   # GET /licences or /licences.json
   def index
@@ -30,10 +30,15 @@ class LicencesController < ApplicationController
 
       @licencesValDepart = 12
 
-      @licencesFiltres = Licence.group(:pilote_id)
+      @licencesFiltres = Licence.joins(:event).where(
+        'numero <= :numero AND 
+         saison_id = :saison_id AND 
+         division_id = :division_id',  
+         numero: params[:numGp],
+         saison_id: params[:saisonId],
+         division_id: params[:divisionId]).group(:pilote_id)
           .select('pilote_id, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
          
-
       
     else
       
@@ -93,6 +98,29 @@ class LicencesController < ApplicationController
     end
   end
 
+
+def downgrade1
+
+    @eventId = params[:id]
+    @divisionLiee = Event.find(@eventId).division_id
+
+    @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionLiee) 
+    
+    @pilotesActifDiv.all.each do |pilote|
+
+      # ici possible de rechercher les points gagnés ou perdus sur licence sur gp n-1 ?
+      # permet d'integrer le test sur les 3 derniers gp pour calcul recup ?
+      licence = Licence.create(pilote_id: pilote.id, event_id: @eventId)
+    
+    end
+    redirect_to licences_url, notice: "la licence a bien été créée"
+
+end
+
+
+
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_licence
@@ -104,5 +132,7 @@ class LicencesController < ApplicationController
       params.require(:licence).permit(:penalite, :recupere, :pilote_id, :event_id)
     end
 
-  
+
+
+
 end

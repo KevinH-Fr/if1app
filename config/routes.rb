@@ -22,8 +22,14 @@ Rails.application.routes.draw do
   resources :resultats
   resources :classecuries
   resources :classements
-  resources :licences
-  
+
+  resources :licences do
+    member do
+      get :downgrade1
+    end
+  end
+
+
 
   get 'home/index'
   get 'home/users'
