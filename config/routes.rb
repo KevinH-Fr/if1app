@@ -23,14 +23,6 @@ Rails.application.routes.draw do
   resources :classecuries
   resources :classements
 
-  #resources :licences do
-  #  member do
-  #    get :downgrade1
-  #  end
-  #end
-
-
-
   get 'home/index'
   get 'home/users'
   get 'home/role'
@@ -39,8 +31,9 @@ Rails.application.routes.draw do
 # test call action
 resources :licences do
   member do
-    get :toggle_creerlicence
+    get :toggle_creerlicences
     get :toggle_supprimerlicences
+    get :toggle_calculrecuplicences
   end
 end
 

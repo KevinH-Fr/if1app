@@ -97,22 +97,43 @@ class LicencesController < ApplicationController
     end
   end
 
-def toggle_creerlicence
+def toggle_creerlicences
   @eventId = params[:id]
   @divisionLiee = Event.find(@eventId).division_id
+  @saisonLiee = Event.find(@eventId).saison_id
+
   @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionLiee) 
     @pilotesActifDiv.all.each do |pilote|
       licence = Licence.create(pilote_id: pilote.id, event_id: @eventId)
     end
   
-  redirect_to licences_url, notice: "la licence2 a bien été créée"
+  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+                notice: "la licence2 a bien été créée"
 end
 
 def toggle_supprimerlicences
   @eventId = params[:id]
+  @divisionLiee = Event.find(@eventId).division_id
+  @saisonLiee = Event.find(@eventId).saison_id
+
   Licence.where(event_id: @eventId).destroy_all
 
-  redirect_to licences_url, notice: "les licences de l'event courant ont bien été supprimées"
+  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee),
+               notice: "les licences de l'event courant ont bien été supprimées"
+end
+
+def toggle_calculrecuplicences
+  @eventId = params[:id]
+  @divisionLiee = Event.find(@eventId).division_id
+  @saisonLiee = Event.find(@eventId).saison_id
+
+  # update chaque pilote colonne pts recupere
+  # construire les tests logiques ici pour calculer les points à recupérer sur event courant
+  licence = Licence.where(event_id: @eventId)
+  licence.update(recupere: 1)
+
+  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+                notice: "les points ont bien été calculés"
 end
 
 
