@@ -74,7 +74,6 @@ class LicencesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /licences/1 or /licences/1.json
   def update
     respond_to do |format|
       if @licence.update(licence_params)
@@ -87,7 +86,6 @@ class LicencesController < ApplicationController
     end
   end
 
-  # DELETE /licences/1 or /licences/1.json
   def destroy
     @licence.destroy
 
@@ -123,20 +121,62 @@ def toggle_supprimerlicences
 end
 
 def toggle_calculrecuplicences
+
+  # a modifier pour integrer le calcul en cours dans la methode indiv en dessous
   @eventId = params[:id]
+
   @divisionLiee = Event.find(@eventId).division_id
   @saisonLiee = Event.find(@eventId).saison_id
+  @numeroEvent = Event.find(@eventId).numero
 
-  # update chaque pilote colonne pts recupere
-  # construire les tests logiques ici pour calculer les points à recupérer sur event courant
-  licence = Licence.where(event_id: @eventId)
-  licence.update(recupere: 1)
+  licence = Licence.where(event_id: @eventId, pilote_id: 15)
+  licence.update(recupere: 3)
 
   redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
                 notice: "les points ont bien été calculés"
 end
 
 
+# faire une nouvelle methode : ajotuer un bouton pour chaque pilote
+# qui permet de calculer ses points avant, et le calcul de recup
+# une fois que ca fonctionne en individuelle, faire une boucle sur tous les pilotes
+
+def toggle_calculrecuplicencesIndiv
+  @licenceId = params[:id]
+  @piloteId = Licence.find(@licenceId).pilote_id
+  @eventId = Licence.find(@licenceId).event_id
+
+  @divisionLiee = Event.find(@eventId).division_id
+  @saisonLiee = Event.find(@eventId).saison_id
+  @numeroEvent = Event.find(@eventId).numero
+  @numeroEvent_1 = Event.find(@eventId).numero - 1 #ok
+
+ # reprendre ici : recuperer l'id du dernier event de cette div 
+   @eventId_1 = Event.find_by(numero: @numeroEvent_1, saison_id: @saisonLiee, division_id: @divisionLiee).id
+
+# trouver la licence du pilote courant sur event precedent
+  @licenceIdPilote_1 = Licence.find_by(event_id: @eventId_1, pilote_id: @piloteId).id
+
+# points perdus event precedent : 
+ @perdus_1 = Licence.find(@licenceIdPilote_1).penalite
+
+# total penalité 3 derniers event : 
+@valPenaAnte = @perdus_1.to_i
+
+# total a recupérer courant :
+  if @valPenaAnte > 0
+    @recupCourant =  0
+  else
+    @recupCourant =  2
+  end
+
+# mettre à jour valeur récupérée courant
+  licence = Licence.find(@licenceId)
+  licence.update(recupere:  @recupCourant )
+
+  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+  notice: "le calcul individul a bien été fait"
+end 
 
 
   private

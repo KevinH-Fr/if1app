@@ -63,30 +63,35 @@
     <%= link_to "Créer licences", toggle_creerlicences_licence_path(eventId), class:"btn btn-warning", :onclick => "return confirm('Sûr ?')" %>
     <%= link_to "Supprimer licences", toggle_supprimerlicences_licence_path(eventId), class:"btn btn-danger", :onclick => "return confirm('Sûr ?')" %>
    
-   <br> <br> 
-
+   <br>
   <%# tab datas %>
   <h5> 
     Event courant : <%= eventId %> | n° <%= numGp %> | <%= circuitPays %>  | <%= divisionNom %>
   </h5> 
 
+  <hr>
   <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">
       <tr>
+        <th>id licence</th>
         <th>Titulaires</th>
         <th>Event</th>
         <th>perdus courant</th>
         <th>recupérés courant</th>
-        <th colspan="3">Actions</th>
+        <th colspan="4">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <% @licencesEvent.each do | licence| %>
+          <td> <%= licence.id %> </td>
           <td> <%= Pilote.find(licence.pilote_id).nom  %> </td>
           <td> <%= licence.event_id %> </td>
           <td> <%= licence.penalite %> </td>
           <td> <%= licence.recupere %> </td> 
+          <td>
+            <%= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
+          </td>
           <td>
             <%= link_to '', licence, class:"fa-solid fa-eye btn btn-primary" %> 
           </td>
