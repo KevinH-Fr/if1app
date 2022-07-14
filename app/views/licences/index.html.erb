@@ -65,7 +65,7 @@
   
     <%= link_to "Calculs recup licences", toggle_calculrecuplicences_licence_path(eventId), class:"btn btn-success" %>
    
-   <br>
+   <br> <br>
   <%# tab datas %>
   <h5> 
     Event courant : <%= eventId %> | n° <%= numGp %> | <%= circuitPays %>  | <%= divisionNom %>
@@ -91,9 +91,9 @@
           <td> <%= licence.event_id %> </td>
           <td> <%= licence.penalite %> </td>
           <td> <%= licence.recupere %> </td> 
-          <td>
+         
             <%#= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
-          </td>
+    
           <td>
             <%= link_to '', licence, class:"fa-solid fa-eye btn btn-primary" %> 
           </td>

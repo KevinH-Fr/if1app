@@ -124,41 +124,66 @@ def toggle_calculrecuplicences
 
   # a modifier pour integrer le calcul en cours dans la methode indiv en dessous
   @eventId = params[:id]
+  @licencesValDepart = 12
   @divisionLiee = Event.find(@eventId).division_id
   @saisonLiee = Event.find(@eventId).saison_id
   @licencesEvent = Licence.all.where(event_id: @eventId)
 
-  @licencesEvent.all.each do |lic|
+  numEvent = Event.find(@eventId).numero
 
-    licenceId = lic.id
-    piloteId = lic.pilote_id
-    eventId = lic.event_id
+  if numEvent >= 4
 
-    divisionId = Event.find(eventId).division_id 
-    saisonId = Event.find(eventId).saison_id 
-    numEvent = Event.find(eventId).numero
-    numEvent_1 = numEvent - 1
-    eventId_1 = Event.find_by(numero: numEvent_1, saison_id: saisonId, division_id: divisionId).id
-    licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id
-    perdus_1 = Licence.find(licenceIdPilote_1).penalite
-    valPenaAnte = perdus_1.to_i
+    @licencesEvent.all.each do |lic|
 
-  if valPenaAnte > 0
-    recupCourant =  0
-  else
-    recupCourant =  2
-  end
+      licenceId = lic.id
+      piloteId = lic.pilote_id
+      eventId = lic.event_id
+      divisionId = Event.find(eventId).division_id 
+      saisonId = Event.find(eventId).saison_id 
+      numEvent = Event.find(eventId).numero
 
+      perdus_0 = lic.penalite
+
+      numEvent_1 = numEvent - 1
+      eventId_1 = Event.find_by(numero: numEvent_1, saison_id: saisonId, division_id: divisionId).id
+      licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id
+      perdus_1 = Licence.find(licenceIdPilote_1).penalite
+
+      numEvent_2 = numEvent - 2
+      eventId_2 = Event.find_by(numero: numEvent_2, saison_id: saisonId, division_id: divisionId).id
+      licenceIdPilote_2 = Licence.find_by(event_id: eventId_2, pilote_id: piloteId).id
+      perdus_2 = Licence.find(licenceIdPilote_2).penalite
+
+      valPenaAnte = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
+
+      totalPenalite = Licence.joins(:event).where(
+            'numero <= :numero AND saison_id = :saison_id AND division_id = :division_id AND pilote_id = :pilote_id', 
+            numero: numEvent, saison_id: saisonId, division_id: divisionId, pilote_id: piloteId).sum(:penalite)
+
+      soldeLicence = @licencesValDepart - totalPenalite.to_i
+
+      if soldeLicence < 12
+        if totalPenalite = 0
+          if soldeLicence < 11
+            recupCourant = 2
+          else
+            recupCourant = 1
+          end
+        end
+      end 
+       
       licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
       licence.update(recupere: recupCourant)
 
+    end
+
+    redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+                  notice: "les points ont bien été calculés"
+  else
+    redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+                  notice: "les points ne peuvent pas être récupérés avant l'event 4"
   end
 
- # licence = Licence.where(event_id: @eventId, pilote_id: 15)
- # licence.update(recupere: 3)
-
-  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
-                notice: "les points ont bien été calculés"
 end
 
 def toggle_calculrecuplicencesIndiv
