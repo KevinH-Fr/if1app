@@ -154,7 +154,7 @@ def toggle_calculrecuplicences
       licenceIdPilote_2 = Licence.find_by(event_id: eventId_2, pilote_id: piloteId).id
       perdus_2 = Licence.find(licenceIdPilote_2).penalite
 
-      valPenaAnte = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
+      pena_n3_n0 = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
 
       totalPenalite = Licence.joins(:event).where(
             'numero <= :numero AND saison_id = :saison_id AND division_id = :division_id AND pilote_id = :pilote_id', 
@@ -162,22 +162,28 @@ def toggle_calculrecuplicences
 
       soldeLicence = @licencesValDepart - totalPenalite.to_i
 
-      if soldeLicence < 12
-        if totalPenalite = 0
-          if soldeLicence < 11
-            recupCourant = 2
-          else
-            recupCourant = 1
+      #recupCourant = pena_n3_n0
+    
+        if pena_n3_n0 == 0 
+          if soldeLicence == 12
+            recupCourant = 0
+          else 
+            if soldeLicence == 11
+              recupCourant = 1
+            else
+              recupCourant = 2
+            end
           end
+        else
+          recupCourant = 0
         end
-      end 
        
       licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
       licence.update(recupere: recupCourant)
 
     end
 
-    redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+    redirect_to licences_url(numGp: numEvent, saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
                   notice: "les points ont bien été calculés"
   else
     redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
