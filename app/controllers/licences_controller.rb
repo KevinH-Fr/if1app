@@ -143,43 +143,56 @@ def toggle_calculrecuplicences
       numEvent = Event.find(eventId).numero
 
       perdus_0 = lic.penalite
+      recuperes_0 = lic.recupere
 
       numEvent_1 = numEvent - 1
       eventId_1 = Event.find_by(numero: numEvent_1, saison_id: saisonId, division_id: divisionId).id
       licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id
       perdus_1 = Licence.find(licenceIdPilote_1).penalite
+      recuperes_1 = Licence.find(licenceIdPilote_1).recupere
 
       numEvent_2 = numEvent - 2
       eventId_2 = Event.find_by(numero: numEvent_2, saison_id: saisonId, division_id: divisionId).id
       licenceIdPilote_2 = Licence.find_by(event_id: eventId_2, pilote_id: piloteId).id
       perdus_2 = Licence.find(licenceIdPilote_2).penalite
+      recuperes_2 = Licence.find(licenceIdPilote_2).recupere
 
       pena_n3_n0 = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
+      recup_n3_n0 = recuperes_0.to_i + recuperes_1.to_i + recuperes_2.to_i
 
       totalPenalite = Licence.joins(:event).where(
             'numero <= :numero AND saison_id = :saison_id AND division_id = :division_id AND pilote_id = :pilote_id', 
             numero: numEvent, saison_id: saisonId, division_id: divisionId, pilote_id: piloteId).sum(:penalite)
+      
+      totalRecupere = Licence.joins(:event).where(
+              'numero <= :numero AND saison_id = :saison_id AND division_id = :division_id AND pilote_id = :pilote_id', 
+              numero: numEvent, saison_id: saisonId, division_id: divisionId, pilote_id: piloteId).sum(:recupere)
 
-      soldeLicence = @licencesValDepart - totalPenalite.to_i
+      soldeLicence = @licencesValDepart - totalPenalite.to_i + totalRecupere.to_i
 
       #recupCourant = pena_n3_n0
     
         if pena_n3_n0 == 0 
-          if soldeLicence == 12
-            recupCourant = 0
-          else 
-            if soldeLicence == 11
-              recupCourant = 1
-            else
-              recupCourant = 2
+          if recup_n3_n0 == 0
+            if soldeLicence == 12
+              recupCourant = 0
+            else 
+              if soldeLicence == 11
+                recupCourant = 1
+              else
+                recupCourant = 2
+              end
             end
+            # update que si pas de perte ni de gains sur n-2 a n-0
+            licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
+            licence.update(recupere: recupCourant)
           end
         else
-          recupCourant = 0
+          
         end
        
-      licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
-      licence.update(recupere: recupCourant)
+    #  licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
+    #  licence.update(recupere: recupCourant)
 
     end
 
