@@ -37,7 +37,7 @@ class LicencesController < ApplicationController
          numero: params[:numGp],
          saison_id: params[:saisonId],
          division_id: params[:divisionId]).group(:pilote_id)
-          .select('pilote_id, event_id, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
+          .select('pilote_id, event_id, penalite, recupere, SUM(penalite) AS total_penalite, SUM(recupere) AS total_recupere')
          
     else
       
@@ -175,17 +175,18 @@ def toggle_calculrecuplicences
         if pena_n3_n0 == 0 
           if recup_n3_n0 == 0
             if soldeLicence == 12
-              recupCourant = 0
             else 
               if soldeLicence == 11
                 recupCourant = 1
               else
                 recupCourant = 2
               end
+               # update que si pas de perte ni de gains sur n-2 a n-0
+              licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
+              licence.update(recupere: recupCourant)
+
             end
-            # update que si pas de perte ni de gains sur n-2 a n-0
-            licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
-            licence.update(recupere: recupCourant)
+           
           end
         else
           

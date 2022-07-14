@@ -41,8 +41,10 @@
               <% end %>
 
             <td> 
-              <% datetime = event.date.to_date %>
-              <%= datetime.strftime("%d/%m/%y") %>
+              <% if event.date.present? %>
+                <% datetime = event.date.to_date %>
+                <%= datetime.strftime("%d/%m/%y") %>
+              <% end %>
             </td>
 
             <td> <%= Division.find(event.division_id).nom %>    </td>
