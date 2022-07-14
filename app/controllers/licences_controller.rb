@@ -124,22 +124,42 @@ def toggle_calculrecuplicences
 
   # a modifier pour integrer le calcul en cours dans la methode indiv en dessous
   @eventId = params[:id]
-
   @divisionLiee = Event.find(@eventId).division_id
   @saisonLiee = Event.find(@eventId).saison_id
-  @numeroEvent = Event.find(@eventId).numero
+  @licencesEvent = Licence.all.where(event_id: @eventId)
 
-  licence = Licence.where(event_id: @eventId, pilote_id: 15)
-  licence.update(recupere: 3)
+  @licencesEvent.all.each do |lic|
+
+    licenceId = lic.id
+    piloteId = lic.pilote_id
+    eventId = lic.event_id
+
+    divisionId = Event.find(eventId).division_id 
+    saisonId = Event.find(eventId).saison_id 
+    numEvent = Event.find(eventId).numero
+    numEvent_1 = numEvent - 1
+    eventId_1 = Event.find_by(numero: numEvent_1, saison_id: saisonId, division_id: divisionId).id
+    licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id
+    perdus_1 = Licence.find(licenceIdPilote_1).penalite
+    valPenaAnte = perdus_1.to_i
+
+  if valPenaAnte > 0
+    recupCourant =  0
+  else
+    recupCourant =  2
+  end
+
+      licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
+      licence.update(recupere: recupCourant)
+
+  end
+
+ # licence = Licence.where(event_id: @eventId, pilote_id: 15)
+ # licence.update(recupere: 3)
 
   redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
                 notice: "les points ont bien été calculés"
 end
-
-
-# faire une nouvelle methode : ajotuer un bouton pour chaque pilote
-# qui permet de calculer ses points avant, et le calcul de recup
-# une fois que ca fonctionne en individuelle, faire une boucle sur tous les pilotes
 
 def toggle_calculrecuplicencesIndiv
   @licenceId = params[:id]

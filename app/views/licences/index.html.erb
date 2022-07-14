@@ -62,6 +62,8 @@
     <% circuitPays = Circuit.find(circuitId).pays %>
     <%= link_to "Créer licences", toggle_creerlicences_licence_path(eventId), class:"btn btn-warning", :onclick => "return confirm('Sûr ?')" %>
     <%= link_to "Supprimer licences", toggle_supprimerlicences_licence_path(eventId), class:"btn btn-danger", :onclick => "return confirm('Sûr ?')" %>
+  
+    <%= link_to "Calculs recup licences", toggle_calculrecuplicences_licence_path(eventId), class:"btn btn-success" %>
    
    <br>
   <%# tab datas %>
@@ -90,7 +92,7 @@
           <td> <%= licence.penalite %> </td>
           <td> <%= licence.recupere %> </td> 
           <td>
-            <%= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
+            <%#= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
           </td>
           <td>
             <%= link_to '', licence, class:"fa-solid fa-eye btn btn-primary" %> 
@@ -106,10 +108,7 @@
    </tbody>
   </table>
 
-  <%= link_to "Calcul récuparatiion", toggle_calculrecuplicences_licence_path(eventId), class:"btn btn-warning" %>
-
   <br><hr>
-
 
    <%# table des situation licences pilotes titulaires %>
    <h5> Synthese des licences </h5> 
@@ -158,8 +157,6 @@
         <% end %>
       </tbody>
     </table>
-
-
 
 
     <% if current_user.admin? %>
