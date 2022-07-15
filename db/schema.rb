@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_11_164015) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_15_141837) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -102,6 +102,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_164015) do
     t.index ["pilote_id"], name: "index_licences_on_pilote_id"
   end
 
+  create_table "paris", force: :cascade do |t|
+    t.string "type"
+    t.integer "montant"
+    t.decimal "cote"
+    t.boolean "resultat"
+    t.integer "solde"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "event_id", null: false
+    t.integer "pilote_id", null: false
+    t.index ["event_id"], name: "index_paris_on_event_id"
+    t.index ["pilote_id"], name: "index_paris_on_pilote_id"
+    
+  end
+
   create_table "pilotes", force: :cascade do |t|
     t.string "nom"
     t.string "statut"
@@ -157,6 +172,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_11_164015) do
   add_foreign_key "events", "saisons"
   add_foreign_key "licences", "events"
   add_foreign_key "licences", "pilotes"
+  add_foreign_key "paris", "events"
+  add_foreign_key "paris", "pilotes"
   add_foreign_key "pilotes", "divisions"
   add_foreign_key "resultats", "events"
   add_foreign_key "resultats", "pilotes"

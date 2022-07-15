@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Paris</h1>
+
+<div id="paris">
+  <% @paris.each do |pari| %>
+    <%= render pari %>
+    <p>
+      <%= link_to "Show this pari", pari %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pari", new_pari_path %>
