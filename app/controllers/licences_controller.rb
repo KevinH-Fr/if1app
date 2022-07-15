@@ -44,6 +44,13 @@ class LicencesController < ApplicationController
       @pilotesActifDiv = Pilote.all
     end
 
+    respond_to do |format|
+      format.html
+      format.pdf do
+       render pdf: "licences", template: "licences/liste", formats: [:html], layout: "pdf"
+      end
+    end
+
   end
 
   def show

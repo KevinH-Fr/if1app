@@ -89,11 +89,10 @@
           <% @licencesEvent.each do | licence| %>
           
             <td> <%= Pilote.find(licence.pilote_id).nom  %> </td>
-        
-            <td> <%= licence.penalite %> </td>
-            <td> <%= licence.recupere %> </td> 
-          
-              <%#= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
+            <td class="col_centree"> <%= licence.penalite %> </td>
+            <td class="col_centree"> <%= licence.recupere %> </td>
+    
+            <%#= link_to "Calcul indiv", toggle_calculrecuplicencesIndiv_licence_path(licence.id), class:"btn btn-warning" %>
       
             <td>
               <%= link_to '', licence, class:"fa-solid fa-eye btn btn-primary" %> 
@@ -157,6 +156,12 @@
       </tbody>
     </table>
  </div>
+
+ <%# PDF event actif %>
+ <% numGp = Event.find(@eventId).numero %>
+ <%= link_to "PDF",  licences_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
+
+
 
     <% if current_user.admin? %>
     <%#= link_to "Nouvelle licence", new_licence_path, class:"btn btn-primary" %>
