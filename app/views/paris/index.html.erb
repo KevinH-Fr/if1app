@@ -1,14 +1,41 @@
-<p style="color: green"><%= notice %></p>
 
-<h1>Paris</h1>
+<br/>
+<h1 class="fa-solid fa-money-bill-1-wave fa-2xl fw-bold fs-1"> - Paris </h1>   
+<br/> <hr/> 
+ 
+<%# tab datas %>
 
-<div id="paris">
-  <% @paris.each do |pari| %>
-    <%= render pari %>
-    <p>
-      <%= link_to "Show this pari", pari %>
-    </p>
-  <% end %>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>  
+        <th>#</th>
+        <th>parieur</th>
+        <th>event</th>
+        <th>montant</th>
+        <th>type</th>
+        <th>coureur</th>
+        <th>résultat</th>
+        <th>solde</th>
+        <th colspan="3">Actions</th>
+      </tr>
+    </thead>
+      <tbody>
+        <tr>
+          <% @paris.each do | pari| %> 
+            <td> <%= pari.id  %> </td>
+            <td> <%= pari.parieur.nom %> </td>
+            <td> <%= pari.event_id %> </td>
+            <td> <%= pari.montant %> </td>
+            <td> <%= pari.typepari %> </td>
+            <td> <%= pari.coureur.nom %> </td>
+            <td></td>
+            <td></td>
+            <td> <%= link_to '', pari, class:"fa-solid fa-eye btn btn-primary" %>  </td>
+            <td> <%= button_to '', pari, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>  </td> 
+            <td> <%= link_to "", edit_pari_path(pari), class:"fa-regular fa-pen-to-square btn btn-secondary" %> </td> 
+         <% end %>
+       </tr>
+    </tbody>
+  </table>
 </div>
-
-<%= link_to "New pari", new_pari_path %>
