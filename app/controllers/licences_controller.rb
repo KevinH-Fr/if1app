@@ -220,46 +220,6 @@ def toggle_calculrecuplicences
 
 end
 
-
-
-def toggle_calculrecuplicencesIndiv
-  @licenceId = params[:id]
-  @piloteId = Licence.find(@licenceId).pilote_id
-  @eventId = Licence.find(@licenceId).event_id
-
-  @divisionLiee = Event.find(@eventId).division_id
-  @saisonLiee = Event.find(@eventId).saison_id
-  @numeroEvent = Event.find(@eventId).numero
-  @numeroEvent_1 = Event.find(@eventId).numero - 1 #ok
-
- # reprendre ici : recuperer l'id du dernier event de cette div 
-   @eventId_1 = Event.find_by(numero: @numeroEvent_1, saison_id: @saisonLiee, division_id: @divisionLiee).id
-
-# trouver la licence du pilote courant sur event precedent
-  @licenceIdPilote_1 = Licence.find_by(event_id: @eventId_1, pilote_id: @piloteId).id
-
-# points perdus event precedent : 
- @perdus_1 = Licence.find(@licenceIdPilote_1).penalite
-
-# total penalité 3 derniers event : 
-@valPenaAnte = @perdus_1.to_i
-
-# total a recupérer courant :
-  if @valPenaAnte > 0
-    @recupCourant =  0
-  else
-    @recupCourant =  2
-  end
-
-# mettre à jour valeur récupérée courant
-  licence = Licence.find(@licenceId)
-  licence.update(recupere:  @recupCourant )
-
-  redirect_to licences_url(saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
-  notice: "le calcul individul a bien été fait"
-end 
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_licence

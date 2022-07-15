@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_15_141837) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_15_143552) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -102,20 +102,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_15_141837) do
     t.index ["pilote_id"], name: "index_licences_on_pilote_id"
   end
 
-  create_table "paris", force: :cascade do |t|
-    t.string "type"
-    t.integer "montant"
-    t.decimal "cote"
-    t.boolean "resultat"
-    t.integer "solde"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "event_id", null: false
-    t.integer "pilote_id", null: false
-    t.index ["event_id"], name: "index_paris_on_event_id"
-    t.index ["pilote_id"], name: "index_paris_on_pilote_id"
-    
-  end
 
   create_table "pilotes", force: :cascade do |t|
     t.string "nom"

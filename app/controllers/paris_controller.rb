@@ -1,30 +1,32 @@
 class ParisController < ApplicationController
   before_action :set_pari, only: %i[ show edit update destroy ]
 
-  # GET /paris or /paris.json
   def index
     @paris = Pari.all
 
   end
 
-  # GET /paris/1 or /paris/1.json
   def show
   end
 
-  # GET /paris/new
   def new
     @pari = Pari.new
     @pilote = Pilote.all
     @event = Event.all
+
+
   end
 
-  # GET /paris/1/edit
   def edit
+    @pilote = Pilote.all
+    @event = Event.all
   end
 
-  # POST /paris or /paris.json
   def create
     @pari = Pari.new(pari_params)
+
+    @event = Event.all
+    @pilote = Pilote.all
 
     respond_to do |format|
       if @pari.save
@@ -37,7 +39,6 @@ class ParisController < ApplicationController
     end
   end
 
-  # PATCH/PUT /paris/1 or /paris/1.json
   def update
     respond_to do |format|
       if @pari.update(pari_params)
@@ -50,7 +51,6 @@ class ParisController < ApplicationController
     end
   end
 
-  # DELETE /paris/1 or /paris/1.json
   def destroy
     @pari.destroy
 
@@ -61,13 +61,11 @@ class ParisController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_pari
       @pari = Pari.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def pari_params
-      params.require(:pari).permit(:type, :montant, :cote, :resultat, :solde, :event_id, :pilote_id)
+      params.require(:pari).permit(:typepari, :montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id)
     end
 end

@@ -20,16 +20,23 @@
   </div>
 
    <div>
-    <%= form.label :pilote, style: "display: block" %>
-    <%= form.select(:pilote_id, options_from_collection_for_select(
+    <%= form.label :parieur, style: "display: block" %>
+    <%= form.select(:parieur_id, options_from_collection_for_select(
                   @pilote,'id', 'nom', 
-                 :selected => form.object.pilote_id), 
+                 :selected => form.object.parieur_id), 
+                 :include_blank => true )%>
+  </div>
+   <div>
+    <%= form.label :coureur, style: "display: block" %>
+    <%= form.select(:coureur_id, options_from_collection_for_select(
+                  @pilote,'id', 'nom', 
+                 :selected => form.object.coureur_id), 
                  :include_blank => true )%>
   </div>
 
   <div>
-    <%= form.label :type, style: "display: block" %>
-    <%= form.text_field :type %>
+    <%= form.label :typepari, style: "display: block" %>
+    <%= form.text_field :typepari %>
   </div>
 
   <div>
