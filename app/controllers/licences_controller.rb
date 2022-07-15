@@ -147,18 +147,25 @@ def toggle_calculrecuplicences
 
       numEvent_1 = numEvent - 1
       eventId_1 = Event.find_by(numero: numEvent_1, saison_id: saisonId, division_id: divisionId).id
-      licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id
-      perdus_1 = Licence.find(licenceIdPilote_1).penalite
-      recuperes_1 = Licence.find(licenceIdPilote_1).recupere
+      licenceIdPilote_1 = Licence.find_by(event_id: eventId_1, pilote_id: piloteId).id rescue nil
+
+      if licenceIdPilote_1.present?
+         perdus_1 = Licence.find(licenceIdPilote_1).penalite
+         recuperes_1 = Licence.find(licenceIdPilote_1).recupere
+      end
 
       numEvent_2 = numEvent - 2
-      eventId_2 = Event.find_by(numero: numEvent_2, saison_id: saisonId, division_id: divisionId).id
-      licenceIdPilote_2 = Licence.find_by(event_id: eventId_2, pilote_id: piloteId).id
-      perdus_2 = Licence.find(licenceIdPilote_2).penalite
-      recuperes_2 = Licence.find(licenceIdPilote_2).recupere
+      eventId_2 = Event.find_by(numero: numEvent_2, saison_id: saisonId, division_id: divisionId).id  
+      licenceIdPilote_2 = Licence.find_by(event_id: eventId_2, pilote_id: piloteId).id rescue nil
 
-      pena_n3_n0 = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
-      recup_n3_n0 = recuperes_0.to_i + recuperes_1.to_i + recuperes_2.to_i
+      if licenceIdPilote_2.present?
+        perdus_2 = Licence.find(licenceIdPilote_2).penalite
+        recuperes_2 = Licence.find(licenceIdPilote_2).recupere
+      end
+       
+      pena_n2_n0 = perdus_0.to_i + perdus_1.to_i + perdus_2.to_i
+      recup_n2_n0 = recuperes_0.to_i + recuperes_1.to_i + recuperes_2.to_i
+     
 
       totalPenalite = Licence.joins(:event).where(
             'numero <= :numero AND saison_id = :saison_id AND division_id = :division_id AND pilote_id = :pilote_id', 
@@ -172,8 +179,8 @@ def toggle_calculrecuplicences
 
       #recupCourant = pena_n3_n0
     
-        if pena_n3_n0 == 0 
-          if recup_n3_n0 == 0
+        if pena_n2_n0 == 0 
+          if recup_n2_n0 == 0
             if soldeLicence == 12
             else 
               if soldeLicence == 11
@@ -205,6 +212,8 @@ def toggle_calculrecuplicences
   end
 
 end
+
+
 
 def toggle_calculrecuplicencesIndiv
   @licenceId = params[:id]
