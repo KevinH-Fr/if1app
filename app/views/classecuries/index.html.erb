@@ -1,102 +1,15 @@
 <h1>Classements Ecuries </h1>
-<br/>
 
-<%# btn choix saison %>
-  Choix saison |
-    <% @saisons.each do |saison| %>
-          <%= link_to "#{saison.nom}", 
-              classecuries_path(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
-    <% end %>
-
-      <% if (@saisonId).present? %>
-        <% @saisonId %>
-        <hr/> 
-
-        <%# btn choix division %>
-        Choix division |
-        <% @divisions.each do |division| %>
-          <%= link_to "#{division.nom}", 
-              classecuries_path(saisonId: @saisonId, divisionId: division.id), 
-              class:"btn btn-dark", :method => :post %> 
-        <% end %>
-
-          <% if (@divisionId).present? %>
-            <% @divisionId %>
-            <hr/> 
-
-            <%# btn choix event %>
-            Choix event |
-            <% @eventsFiltres.order(:numero).each do |event| %>
-              <% if @saisonId = event.saison_id %>
-                <% if @divisionId = event.division_id %>
-                  <% divGp = Division.find(event.division_id).numero %>
-                  <% saisonEvent = Saison.find(event.saison_id).nom %>
-                  <% numGp = Event.find(event.id).numero %>
-                  <% nomPays = Circuit.find(event.circuit_id).pays %>
-                  <%= link_to "GP #{event.numero}"" - #{nomPays}", 
-                      classecuries_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
-                      class:"btn btn-primary", :method => :post %> 
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-      <% end %>
-  <hr/> 
+<%= render "shared/choixevent" %>
 
   <%# entete event %>
   <%# @eventId %>
 
  <% if (@eventId).present? %>
 
-    <table width="100%">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Date</th>
-            <th>Pays</th>
-            <th>Drapeau</th>
-            <th>Carte</th>
-            <th>Division</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>
-                <%= Event.find(@eventId).numero %>
-            </td>
-            <td>
-                <%= Event.find(@eventId).date %>
-            </td>
-            <td>
-                  <% circuitId = Event.find(@eventId).circuit_id %> 
-                  <%= Circuit.find(circuitId).pays %>
-            </td>
-            <td width="60">
-              <% if (Circuit.find(circuitId).drapeau).blank? %>
-              <% else %>
-                <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 50px; display: block", class: "img-fluid rounded") %> 
-              <% end %>
-            </td>
-            <td width="60">
-              <% if (Circuit.find(circuitId).carte).blank? %>
-              <% else %>
-                  <%= image_tag(Circuit.find(circuitId).carte, style: "width: 50px; display: block", class: "img-fluid rounded") %>  
-              <% end %>
-            </td>
-            <td>
-             
-                <% divisionId = Event.find(@eventId).division_id %> 
-                <%= Division.find(divisionId).numero %>
-            
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-    <hr/>
-   
- <%#= tableau data classement %>
+   <%= render "shared/eventactif" %>
+    
+   <%#= tableau data classement %>
 
    <table class="table table-striped table-bordered table-hover">
     <thead class="table-dark">

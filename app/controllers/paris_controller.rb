@@ -3,6 +3,33 @@ class ParisController < ApplicationController
 
   def index
     @paris = Pari.all
+    @saisons = Saison.all
+    @divisions = Division.all
+    @events = Event.all
+
+    if params[:saisonId]
+      @saisonId = params[:saisonId]
+    end
+
+    if params[:divisionId]
+      @divisionId = params[:divisionId]
+
+      @eventsFiltres = @events.where('saison_id = :saison_id AND division_id = :division_id',
+        saison_id: @saisonId, division_id: @divisionId)
+    end
+
+    if params[:eventId]
+      @eventId = params[:eventId]
+      @eventNum = Event.find(@eventId).numero 
+
+      @pilotes = Pilote.all
+      @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId) 
+         
+    else
+      
+      @pilotesActifDiv = Pilote.all
+    end
+
 
   end
 

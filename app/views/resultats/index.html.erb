@@ -2,106 +2,19 @@
 <% if user_signed_in? %>
     <h1>Resultats</h1>
 
-    <%# btn choix saison %>
-      Choix saison |
-        <% @saisons.each do |saison| %>
-              <%= link_to "#{saison.nom}", 
-              resultats_path(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
-        <% end %>
-
-          <% if (@saisonId).present? %>
-            <% @saisonId %>
-            <hr/> 
-
-            <%# btn choix division %>
-            Choix division |
-            <% @divisions.each do |division| %>
-              <%= link_to "#{division.nom}", 
-                  resultats_path(saisonId: @saisonId, divisionId: division.id), 
-                  class:"btn btn-dark", :method => :post %> 
-            <% end %>
-
-              <% if (@divisionId).present? %>
-                <% @divisionId %>
-                <hr/> 
-
-                <%# btn choix event %>
-                Choix event |
-                <% @eventsFiltres.order(:numero).each do |event| %>
-                  <% if @saisonId = event.saison_id %>
-                    <% if @divisionId = event.division_id %>
-                      <% divGp = Division.find(event.division_id).numero %>
-                      <% saisonEvent = Saison.find(event.saison_id).nom %>
-                      <% nomPays = Circuit.find(event.circuit_id).pays %>
-                      <%= link_to "GP #{event.numero}"" - #{nomPays}", 
-                          resultats_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id), 
-                          class:"btn btn-primary", :method => :post %> 
-                    <% end %>
-                  <% end %>
-                <% end %>
-              <% end %>
-          <% end %>
-      <hr/> 
+   <%= render "shared/choixevent" %>
 
       <% if current_user.admin? %>
           <%= link_to "Nouveau résultat", new_resultat_path, class:"btn btn-primary" %>
           <br/><br/>
       <% end %>
 
-      <%# entete event %>
-      <%# @eventId %>
-
-    <% if (@eventId).blank? %>
-    <% else %>
-        <table width="100%">
-            <thead>
-              <tr>
-                <th>N°</th>
-                <th>Date</th>
-                <th>Pays</th>
-                <th>Drapeau</th>
-                <th>Carte</th>
-                <th>Division</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>
-                    <%= Event.find(@eventId).numero %>
-                </td>
-                <td>
-                  <% datetime = Event.find(@eventId).date.to_date %>
-                  <%= datetime.strftime("%d/%m/%y") %>
-                </td>
-                <td>
-                      <% circuitId = Event.find(@eventId).circuit_id %> 
-                      <%= Circuit.find(circuitId).pays %>
-                </td>
-                <td>
-                  <% if (Circuit.find(circuitId).drapeau).blank? %>
-                  <% else %>
-                    <%= image_tag(Circuit.find(circuitId).drapeau, style: "width: 50px; display: block", class: "img-fluid rounded") %> 
-                  <% end %>
-                </td>
-                <td>
-                  <% if (Circuit.find(circuitId).carte).blank? %>
-                  <% else %>
-                      <%= image_tag(Circuit.find(circuitId).carte, style: "width: 50px; display: block", class: "img-fluid rounded") %>  
-                  <% end %>
-                </td>
-                <td>
-                    <% divisionId = Event.find(@eventId).division_id %> 
-                    <%= Division.find(divisionId).nom %>
-                </td>
-              </tr>
-          </tbody>
-        </table>
-
-        <hr/>
+    <% if (@eventId).present? %>
+        
+      <%= render "shared/eventactif" %>
       
       <%# tableau datas %>
-    <div class="table-responsive">
+      <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
           <thead class="table-dark">
             <tr>

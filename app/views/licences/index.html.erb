@@ -5,52 +5,8 @@
   <h1 class="fa-solid fa-person-military-pointing fa-2xl fw-bold fs-1"> - Licences </h1>   
   <br/> <hr/> 
 
- <%# btn choix saison %>
-      Choix saison |
-        <% @saisons.each do |saison| %>
-              <%= link_to "#{saison.nom}", 
-              licences_path(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
-        <% end %>
+<%= render "shared/choixevent" %>
 
-          <% if (@saisonId).present? %>
-            <% @saisonId %>
-            <hr/> 
-
-            <%# btn choix division %>
-            Choix division |
-            <% @divisions.each do |division| %>
-              <%= link_to "#{division.nom}", 
-                  licences_path(saisonId: @saisonId, divisionId: division.id), 
-                  class:"btn btn-dark", :method => :post %> 
-            <% end %>
-
-              <% if (@divisionId).present? %>
-                <% @divisionId %>
-                <hr/> 
-
-             <%# btn choix event %>
-                Choix event |
-                <% @eventsFiltres.order(:numero).each do |event| %>
-                  <% if @saisonId = event.saison_id %>
-                    <% if @divisionId = event.division_id %>
-                      <% divGp = Division.find(event.division_id).numero %>
-                      <% saisonEvent = Saison.find(event.saison_id).nom %>
-                      <% numGp = Event.find(event.id).numero %>
-                      <% nomPays = Circuit.find(event.circuit_id).pays %>
-                      <%= link_to "GP #{event.numero}"" - #{nomPays}", 
-                          licences_path(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
-                          class:"btn btn-primary", style:"margin: 2px", :method => :post %> 
-
-                        <%#= link_to "Créer licences",  licences_downgrade1_path(eventId: 3), class:"btn btn-secondary", :onclick => "return confirm('Créer les licences des titulaires ?')" %> 
-
-                    <% end %>
-                    
-                  <% end %>
-                <% end %>
-
-              <% end %>
-          <% end %>
-      <hr/> 
 
   <% if (@eventId).present? %>
 
