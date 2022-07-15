@@ -73,3 +73,9 @@ th, td {
 .enteteGp{
   text-decoration: underline;
 }
+
+small {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+}
