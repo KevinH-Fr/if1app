@@ -8,7 +8,7 @@
 
 <% if (@eventId).present? %>
   <%= render "shared/eventactif" %>
-<% end %>
+
 
 <%# tab datas %>
 
@@ -29,7 +29,7 @@
     </thead>
       <tbody>
         <tr>
-          <% @parisFiltres.each do | pari| %> 
+          <% @parisEvent.each do | pari| %> 
             <td> <%= pari.id  %> </td>
             <td> <%= pari.parieur.nom %> </td>
             <td> <%= pari.event_id %> </td>
@@ -50,3 +50,4 @@
 <br>
 <%= link_to "Nouveu pari", new_pari_path, class:"btn btn-primary" %>
 
+<% end %>

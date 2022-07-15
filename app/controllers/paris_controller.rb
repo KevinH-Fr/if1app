@@ -25,7 +25,7 @@ class ParisController < ApplicationController
       @pilotes = Pilote.all
       @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId) 
 
-      @parisFiltres = @paris.where('event_id = :event_id', event_id: @eventId)
+      @parisEvent = Pari.all.where(event_id: @eventId)
          
     else
       
