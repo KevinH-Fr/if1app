@@ -23,21 +23,27 @@
           <% @licencesFiltres.each_with_index do | licence, i| %>
           
             <td>
-              <% if licence.pilote_id.present? %>
-                <%= Pilote.find(licence.pilote_id).nom  %>
-              <% end %>  
+             <div class="contenant">
+              <% idPilote = licence.pilote_id %> 
+              <% idEcurie = Pilote.find(idPilote).ecurie %>
+              <% nomPilote = Pilote.find(idPilote).nom %> 
+                <%= image_tag Equipe.find(idEcurie).logo, style: "width: 340px; display: block", class: "img-fluid rounded" %>
+                      <div class="texte_centrer">
+                        <%= nomPilote %>
+                      </div>
+             </div>
             </td>
               
-            <td style="text-align: center;">
+            <td class="cols_pos_score">
               <%= @licencesValDepart %>
              </td>
-            <td style="text-align: center;">
+            <td class="cols_pos_score">
                 <%= licence.total_penalite %>
             </td>
-            <td style="text-align: center;">
+           <td class="cols_pos_score">
                 <%= licence.total_recupere %>
             </td>
-             <td style="text-align: center;">
+             <td class="cols_solde">
               <strong>
                 <%= @licencesValDepart.to_i - licence.total_penalite.to_i + licence.total_recupere.to_i %>
               </strong>
