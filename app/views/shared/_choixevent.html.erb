@@ -2,7 +2,7 @@
 <%# btn choix saison %>
   Choix saison |
   <% @saisons.each do |saison| %>
-    <%= link_to "#{saison.nom}", url_for(saisonId: saison.id), class:"btn btn-secondary", :method => :post %> 
+    <%= link_to "#{saison.nom}", url_for(saisonId: saison.id), class:"btn btn-sm btn-secondary", :method => :post %> 
   <% end %>
 
     <% if (@saisonId).present? %>
@@ -11,10 +11,12 @@
       Choix division |
         <% @divisions.each do |division| %>
           <%= link_to "#{division.nom}", url_for(saisonId: @saisonId, divisionId: division.id), 
-                class:"btn btn-dark", :method => :post %>      
+                class:"btn btn-sm btn-dark", :method => :post %>   
+           
         <% end %>
 
           <% if (@divisionId).present? %>
+           
               <hr/> 
               <%# btn choix event %>
               Choix event |
@@ -26,7 +28,7 @@
                     <% numGp = Event.find(event.id).numero %>
                     <% nomPays = Circuit.find(event.circuit_id).pays %>
                     <%= link_to "GP #{event.numero}"" - #{nomPays}", url_for(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
-                          class:"btn btn-primary", style:"margin: 2px", :method => :post %> 
+                          class:"btn btn-sm btn-primary", style:"margin: 2px", :method => :post %> 
                  <% end %>
               <% end %>
           <% end %>

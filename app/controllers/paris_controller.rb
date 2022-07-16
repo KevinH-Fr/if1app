@@ -32,7 +32,6 @@ class ParisController < ApplicationController
       @pilotesActifDiv = Pilote.all
     end
 
-
   end
 
   def show
@@ -42,7 +41,6 @@ class ParisController < ApplicationController
     @pari = Pari.new
     @pilote = Pilote.all
     @event = Event.all
-
 
   end
 

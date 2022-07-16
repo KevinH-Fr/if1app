@@ -52,6 +52,9 @@ th, td {
  /*  max-width: 50px; */
 }
 
+.bouton {
+  font-size: xx-small;
+}
 .col_actions {
  /* max-width: 60px; */
 }
@@ -74,8 +77,10 @@ th, td {
   text-decoration: underline;
 }
 
-small {
+.footer {
   position: absolute;
   bottom: 0px;
-  width: 100%;
+ /* width: 100%; */
+  font-size: xx-small;
+  color: grey;
 }
