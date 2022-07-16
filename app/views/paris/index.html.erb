@@ -27,8 +27,8 @@
       </tr>
     </thead>
       <tbody>
-        <tr>
-          <% @parisEvent.each do | pari| %> 
+          <% @paris.each do | pari| %> 
+           <tr>
             <td> <%= pari.id  %> </td>
             <td> <%= pari.parieur.nom %> </td>
             <td> <%= pari.event_id %> </td>
@@ -41,8 +41,8 @@
             <td> <%= link_to '', pari, class:"fa-solid fa-eye btn btn-primary" %>  </td>
             <td> <%= button_to '', pari, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>  </td> 
             <td> <%= link_to "", edit_pari_path(pari), class:"fa-regular fa-pen-to-square btn btn-secondary" %> </td> 
+          </tr>
          <% end %>
-       </tr>
     </tbody>
   </table>
 </div>

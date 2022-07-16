@@ -2,7 +2,11 @@ class ParisController < ApplicationController
   before_action :set_pari, only: %i[ show edit update destroy ]
 
   def index
+
     @paris = Pari.all
+
+
+
     @saisons = Saison.all
     @divisions = Division.all
     @events = Event.all
@@ -26,6 +30,10 @@ class ParisController < ApplicationController
       @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId) 
 
       @parisEvent = Pari.all.where(event_id: @eventId)
+
+      @paris = Pari.event_courant(@eventId).all
+
+
          
     else
       

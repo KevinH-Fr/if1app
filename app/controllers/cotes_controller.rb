@@ -42,8 +42,8 @@ class CotesController < ApplicationController
              saison_id: params[:saisonId],
              division_id: params[:divisionId])
   
-            @resultatsFiltres = @resultatsFiltres.select(:pilote_id, "sum(score) as sum_amount").group(:pilote_id).order(
-              "sum(score) desc").sum(:score)
+      @pilotes = @pilotes.filter_by_division(params[:divisionId]) if params[:divisionId].present?
+
             
       else
         
