@@ -2,13 +2,7 @@ class Event < ApplicationRecord
   belongs_to :saison, :optional => true
   belongs_to :circuit, :optional => true
 
-  
-
 #  has_many :resultats, :dependent => :delete_all 
-
- # has_many :resultats, :dependent => :delete_all 
-
-  
 
     def formatted_name
        datetime = date.to_date
@@ -21,5 +15,12 @@ class Event < ApplicationRecord
       datetime = date.to_date.strftime("%d/%m/%y")
       "n°#{numero} - | #{pays} - | #{datetime}"
     end 
+
+
+
+
+   # scope :event_courant, -> (event_courant) { where(event_id: event_courant)}
+
+
 
 end

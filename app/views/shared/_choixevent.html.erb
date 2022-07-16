@@ -25,9 +25,9 @@
                   <% if @divisionId = event.division_id %>
                     <% divGp = Division.find(event.division_id).numero %>
                     <% saisonEvent = Saison.find(event.saison_id).nom %>
-                    <% numGp = Event.find(event.id).numero %>
+                    <% @numGp = Event.find(event.id).numero %>
                     <% nomPays = Circuit.find(event.circuit_id).pays %>
-                    <%= link_to "GP #{event.numero}"" - #{nomPays}", url_for(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: numGp), 
+                    <%= link_to "GP #{event.numero}"" - #{nomPays}", url_for(saisonId: @saisonId, divisionId: @divisionId, eventId: event.id, numGp: @numGp), 
                           class:"btn btn-sm btn-primary", style:"margin: 2px", :method => :post %> 
                  <% end %>
               <% end %>

@@ -22,14 +22,14 @@
    <div>
     <%= form.label :parieur, style: "display: block" %>
     <%= form.select(:parieur_id, options_from_collection_for_select(
-                  @pilote,'id', 'nom', 
+                  @parieur,'id', 'nom', 
                  :selected => form.object.parieur_id), 
                  :include_blank => true )%>
   </div>
    <div>
     <%= form.label :coureur, style: "display: block" %>
     <%= form.select(:coureur_id, options_from_collection_for_select(
-                  @pilote,'id', 'nom', 
+                  @coureur,'id', 'nom', 
                  :selected => form.object.coureur_id), 
                  :include_blank => true )%>
   </div>
