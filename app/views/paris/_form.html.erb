@@ -36,7 +36,9 @@
 
   <div>
     <%= form.label :typepari, style: "display: block" %>
-    <%= form.text_field :typepari %>
+    <%= form.select(:typepari, Pari::TYPES_PARI) %>
+
+
   </div>
 
   <div>

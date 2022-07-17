@@ -29,6 +29,9 @@ class ParisController < ApplicationController
 
       @paris = Pari.event_courant(@eventId).all
 
+      @coureur = Pilote.statut_actif.division_courant(@divisionId).all
+      @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
+
     else
       
     end
@@ -41,7 +44,6 @@ class ParisController < ApplicationController
   def new
     @divisionId = params[:divisionId]
     @pari = Pari.new
-    @pilote = Pilote.all
 
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all
     @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
@@ -51,7 +53,9 @@ class ParisController < ApplicationController
   end
 
   def edit
-    @pilote = Pilote.all
+    @coureur = Pilote.statut_actif.division_courant(@divisionId).all
+    @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
+    
     @event = Event.all
   end
 
@@ -99,6 +103,6 @@ class ParisController < ApplicationController
     end
 
     def pari_params
-      params.require(:pari).permit(:typepari, :montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id)
+      params.fetch(:pari, {}).permit(:montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
     end
 end
