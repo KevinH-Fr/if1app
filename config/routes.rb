@@ -23,7 +23,12 @@ Rails.application.routes.draw do
   resources :resultats
   resources :classecuries
   resources :classements
-  resources :cotes
+
+  resources :cotes do
+    member do
+      get :toggle_calculcotes
+    end
+  end
 
   get 'home/index'
   get 'home/users'

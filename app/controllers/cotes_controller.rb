@@ -30,12 +30,11 @@ class CotesController < ApplicationController
         @calculs_cotes = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
         .group_sum_order
 
-        #@calculs_cotesBis = @resultats_filtres.pluck(:pilote_id, :total) 
+      #  @calculs_cotes = @resultats_filtres.pluck(:pilote_id, :total) 
 
+       # @valDepuisModel = Resultat.valeur 
      #   @resultatsFiltres = @resultatsFiltres.select(:pilote_id, "sum(score) as sum_amount").group(:pilote_id).order(
       #    "sum(score) desc").sum(:score)
-          
-
 
       else
       end
@@ -48,6 +47,33 @@ class CotesController < ApplicationController
       end
   
     end
+
+    def toggle_calculcotes
+        
+      @eventId = params[:id]
+      @licencesValDepart = 12
+      @divisionLiee = Event.find(@eventId).division_id
+      @saisonLiee = Event.find(@eventId).saison_id
+      @licencesEvent = Licence.all.where(event_id: @eventId)
+    
+      @numEvent = Event.find(@eventId).numero
+   
+      @resultats_filtres = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
+      .group_sum_order
+
+        @resultats_filtres.each do |resultat|
+
+          piloteId = resultat.pilote_id
+    
+          resultat = Resultat.where(event_id: @eventId, pilote_id: piloteId)
+          resultat.update(cote: 100)
+         
+        end
+    
+        redirect_to cotes_url(numGp: @numEvent, saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
+                      notice: "les points ont bien été calculés"
+    end
+
   
     private
   

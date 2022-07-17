@@ -7,6 +7,9 @@
   <% if (@eventId).present? %> 
     <%= render "shared/eventactif" %>
     
+    <%= link_to "Calculs cotes", toggle_calculcotes_cote_path(@eventId), class:"btn btn-success", style:"margin: 2px" %>
+    <br><br>
+
     <%#= tableau data cotes %>
     <table class="table table-striped table-bordered table-hover">
       <thead class="table-dark">
@@ -31,13 +34,18 @@
 
             </td>
             <td style="text-align: center;">
-              <strong>
+             
+             <%#= (resultat[1]) %> 
+
+              <%#= @valDepuisModel %>
+
                 <% pointsPilote = resultat.total %>
                 <% pointsMax = @testmaxScore[1] %>
-                <% coteVictoire =  pointsPilote  %>
+                <%# coteVictoire =  pointsPilote  %>
                
                 <%=  number_with_precision(1.11 + ((i+(i*1.13) * ( (pointsMax - pointsPilote)/4))), precision: 2) %>
-              </strong>
+                 <%#=  number_with_precision(resultat.total, precision: 2) %>
+            
             </td>
         </tr>
         <% end %>
