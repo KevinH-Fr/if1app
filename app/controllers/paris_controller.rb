@@ -43,6 +43,8 @@ class ParisController < ApplicationController
 
   def new
     @divisionId = params[:divisionId]
+    @eventId = params[:eventId]
+    
     @pari = Pari.new
 
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all

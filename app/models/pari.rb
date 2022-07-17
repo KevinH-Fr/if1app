@@ -3,7 +3,7 @@ class Pari < ApplicationRecord
     belongs_to :coureur, :class_name => 'Pilote', :optional => true
 
     enum typepari: [:victoire, :podium, :top10]
-    TYPES_PARI = ["victoire", "podium"]
+    #TYPES_PARI = ["victoire", "podium"]
 
    # scope :typevictoire, -> { where(typepari: 'victoire')}
 
