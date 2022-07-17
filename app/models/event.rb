@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :saison, :optional => true
   belongs_to :circuit, :optional => true
 
-#  has_many :resultats, :dependent => :delete_all 
+  has_many :resultats, :dependent => :delete_all 
 
     def formatted_name
        datetime = date.to_date
@@ -12,7 +12,7 @@ class Event < ApplicationRecord
 
     def formatted_name_bis
       pays = Circuit.find(circuit_id).pays
-      datetime = date.to_date.strftime("%d/%m/%y")
+      datetime = date
       "n°#{numero} - | #{pays} - | #{datetime}"
     end 
 
@@ -20,7 +20,9 @@ class Event < ApplicationRecord
 
 
    # scope :event_courant, -> (event_courant) { where(event_id: event_courant)}
-
+ 
+ #  scope :division_courant, -> (division_courant) { where(division_id: division_courant)}
+ 
 
 
 end

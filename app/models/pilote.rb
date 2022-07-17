@@ -11,4 +11,6 @@ class Pilote < ApplicationRecord
    scope :division_courant, -> (division_courant) { where(division_id: division_courant)}
    scope :division_non_courant, -> (division_courant) { where.not(division_id: division_courant)}
 
+
+
 end

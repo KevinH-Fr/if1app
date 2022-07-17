@@ -18,8 +18,6 @@ class ParisController < ApplicationController
       @eventsFiltres = @events.where('saison_id = :saison_id AND division_id = :division_id',
         saison_id: @saisonId, division_id: @divisionId)
 
-   
-       
 
     end
 
@@ -39,12 +37,13 @@ class ParisController < ApplicationController
   end
 
   def show
+    
   end
 
   def new
     @divisionId = params[:divisionId]
     @eventId = params[:eventId]
-    
+
     @pari = Pari.new
 
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all

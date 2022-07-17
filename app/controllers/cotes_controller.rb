@@ -29,27 +29,47 @@ class CotesController < ApplicationController
         @eventId = params[:eventId]
         @eventNum = Event.find(@eventId).numero 
   
-        @divisionId = Event.find(@eventId).division_id 
+       # @divisionId = Event.find(@eventId).division_id 
   
-        @pilotes = Pilote.all
-        @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId)  
-  
-          @resultatsFiltres = Resultat.joins(:event).where(
-            'numero <= :numero AND 
-             saison_id = :saison_id AND 
-             division_id = :division_id',  
-             numero: params[:numGp],
-             saison_id: params[:saisonId],
-             division_id: params[:divisionId])
-  
-      @pilotes = @pilotes.filter_by_division(params[:divisionId]) if params[:divisionId].present?
+      #  @resultats = Resultat.all
 
+      # @resultats_division = Resultat.division_courant(@divisionId).all
+     
+      # @resultats_saison = Resultat.saison_courant(@saisonId).all
+
+       #@resultats_until_numero_event = Resultat.numero_until_courant(@eventNum).all
+
+        @resultats_filtres = Resultat.saison_courant(@saisonId)
+                                          .division_courant(@divisionId)
+                                          .numero_until_courant(@eventNum).all
+
+
+
+
+      #  @resultats = Resultat.event_courant(@eventId).all
+
+      #  @pilotes = Pilote.all
+      #  @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId)  
+  
+       #   @resultatsFiltres = Resultat.joins(:event).where(
+       #     'numero <= :numero AND 
+       #      saison_id = :saison_id AND 
+       #      division_id = :division_id',  
+       #      numero: params[:numGp],
+       #      saison_id: params[:saisonId],
+       #      division_id: params[:divisionId])
+  
+
+
+
+     # @pilotes = @pilotes.filter_by_division(params[:divisionId]) if params[:divisionId].present?
+   #   @pilotes = Pilote.statut_actif.division_courant(@divisionId).all
             
       else
         
         @resultats = Resultat.all
-        @resultatsFiltres = Resultat.all
-        @pilotesActifDiv = Pilote.all
+    #    @resultatsFiltres = Resultat.all
+    #    @pilotesActifDiv = Pilote.all
       end
   
       respond_to do |format|

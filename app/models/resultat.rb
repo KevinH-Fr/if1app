@@ -11,20 +11,16 @@ class Resultat < ApplicationRecord
     belongs_to :saison, :optional => true
 
     validates :pilote_id, presence: true
-
     validates :ecurie, presence: true
 
 
-
-
-#####################################################
-
-    scope :with_value, -> { where("(pilote_id) > 0") }
     scope :with_mt, -> { where("(mt) = true") }
 
-    scope :div_courante, -> { where("(division_id) = 3") }
-    scope :res_pilote, ->  { where('pilote_id = :pilote_id').sum(:score)  }
+scope :division_courant, -> (division_courant) { joins(:event).where("division_id = ?", division_courant)}
+scope :saison_courant, -> (saison_courant) { joins(:event).where("saison_id = ?", saison_courant)}
 
+scope :numero_until_courant, -> (numero_until_courant) { joins(:event).where("numero <= ?", numero_until_courant)}
+
+scope :event_courant, -> (event_courant) { where("event_id <= ?", event_courant)}
 
 end
-
