@@ -24,6 +24,18 @@ class CotesController < ApplicationController
 
         @resultats_filtres = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
                                      .group_sum_order
+        
+        @testmaxScore = @resultats_filtres.pluck(:pilote_id, :total).first 
+
+        @calculs_cotes = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
+        .group_sum_order
+
+        #@calculs_cotesBis = @resultats_filtres.pluck(:pilote_id, :total) 
+
+     #   @resultatsFiltres = @resultatsFiltres.select(:pilote_id, "sum(score) as sum_amount").group(:pilote_id).order(
+      #    "sum(score) desc").sum(:score)
+          
+
 
       else
       end
@@ -31,7 +43,6 @@ class CotesController < ApplicationController
       respond_to do |format|
         format.html
         format.pdf do
-  
          render pdf: "CotesParis", template: "classements/liste", formats: [:html], layout: "pdf"
         end
       end

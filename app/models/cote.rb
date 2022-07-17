@@ -1,5 +1,6 @@
 class Cote < ApplicationRecord
-
+    
+ 
 end
   
   

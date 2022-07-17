@@ -19,22 +19,24 @@
 
       <tbody>
         <tr>
-          <% @resultats_filtres.each_with_index do | resultat, i| %>
+          <% @calculs_cotes.each_with_index do | resultat, i| %>
             <td style="text-align: center;">
                 <strong>  
                   <%= (i+1) %>
                 </strong> 
             </td>
             <td>
-              <%#= Pilote.find(resultat[0]).nom %> 
+              <%#= (resultat[0]) %> 
               <%= Pilote.find(resultat.pilote_id).nom %>
 
             </td>
             <td style="text-align: center;">
               <strong>
-                <%= resultat.total %>
-                <% coteVictoire = ( number_with_precision( (i + 1) * 1.24 , precision: 2) ) %>
-                <%= coteVictoire %>
+                <% pointsPilote = resultat.total %>
+                <% pointsMax = @testmaxScore[1] %>
+                <% coteVictoire =  pointsPilote  %>
+               
+                <%=  number_with_precision(1.11 + ((i+(i*1.13) * ( (pointsMax - pointsPilote)/4))), precision: 2) %>
               </strong>
             </td>
         </tr>
