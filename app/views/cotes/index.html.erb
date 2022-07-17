@@ -26,13 +26,13 @@
                 </strong> 
             </td>
             <td>
-              <%= Pilote.find(resultat.pilote_id).nom %> 
-
-             
+              <%#= Pilote.find(resultat[0]).nom %> 
+              <%= Pilote.find(resultat.pilote_id).nom %>
 
             </td>
             <td style="text-align: center;">
               <strong>
+                <%= resultat.total %>
                 <% coteVictoire = ( number_with_precision( (i + 1) * 1.24 , precision: 2) ) %>
                 <%= coteVictoire %>
               </strong>
