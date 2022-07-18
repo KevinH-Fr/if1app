@@ -2,6 +2,10 @@ class Pari < ApplicationRecord
     belongs_to :parieur, :class_name => 'Pilote', :optional => true
     belongs_to :coureur, :class_name => 'Pilote', :optional => true
 
+    validates :coureur_id, presence: true
+    validates :typepari, presence: true
+   
+
     enum typepari: [:victoire, :podium, :top10]
     #TYPES_PARI = ["victoire", "podium"]
 

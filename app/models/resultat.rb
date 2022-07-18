@@ -13,6 +13,8 @@ class Resultat < ApplicationRecord
     validates :pilote_id, presence: true
     validates :ecurie, presence: true
 
+
+
     scope :with_mt, -> { where("(mt) = true") }
 
 scope :division_courant, -> (division_courant) { joins(:event).where("division_id = ?", division_courant)}

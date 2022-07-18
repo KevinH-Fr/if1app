@@ -44,7 +44,7 @@ class ParisController < ApplicationController
     @divisionId = params[:divisionId]
     @eventId = params[:eventId]
 
-    @pari = Pari.new
+    @pari = Pari.new(pari_params)
 
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all
     @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
@@ -62,6 +62,8 @@ class ParisController < ApplicationController
 
   def create
     @pari = Pari.new(pari_params)
+    @coureur = Pilote.statut_actif.division_courant(@divisionId).all
+    @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
 
     @event = Event.all
     @pilote = Pilote.all
@@ -104,6 +106,7 @@ class ParisController < ApplicationController
     end
 
     def pari_params
+      
       params.fetch(:pari, {}).permit(:montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
     end
 end
