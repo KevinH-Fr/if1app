@@ -12,6 +12,9 @@ class Classement < ApplicationRecord
  scope :division_courant, -> (division_courant) { joins(:event).where("division_id = ?", division_courant)}
  scope :numero_until_courant, -> (numero_until_courant) { joins(:event).where("numero <= ?", numero_until_courant)}
 
+ scope :order_by_score, -> { order('score').reverse }
+
+
  scope :max_points, -> { all.order(score: :DESC).first }
 
 
