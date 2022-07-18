@@ -6,7 +6,7 @@ class CotesController < ApplicationController
       @divisions = Division.all
       @events = Event.all
       @saisons = Saison.all
-     
+
       if params[:saisonId]
         @saisonId = params[:saisonId]
       end
@@ -22,19 +22,13 @@ class CotesController < ApplicationController
         @eventId = params[:eventId]
         @eventNum = Event.find(@eventId).numero 
 
-        @resultats_filtres = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
-                                     .group_sum_order
-        
-        @testmaxScore = @resultats_filtres.pluck(:pilote_id, :total).first 
 
-        @calculs_cotes = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
-        .group_sum_order
+       # @calculs_cotes = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
+        #.group_sum_order
 
-      #  @calculs_cotes = @resultats_filtres.pluck(:pilote_id, :total) 
+        @cotes = Classement.event_courant(@eventId).order(:score).reverse
 
-       # @valDepuisModel = Resultat.valeur 
-     #   @resultatsFiltres = @resultatsFiltres.select(:pilote_id, "sum(score) as sum_amount").group(:pilote_id).order(
-      #    "sum(score) desc").sum(:score)
+        # ajouter une methode vers model qui modifie la valeur de base cote en une autre valeur pour avoir cote victoire
 
       else
       end
@@ -48,31 +42,6 @@ class CotesController < ApplicationController
   
     end
 
-    def toggle_calculcotes
-        
-      @eventId = params[:id]
-      @licencesValDepart = 12
-      @divisionLiee = Event.find(@eventId).division_id
-      @saisonLiee = Event.find(@eventId).saison_id
-      @licencesEvent = Licence.all.where(event_id: @eventId)
-    
-      @numEvent = Event.find(@eventId).numero
-   
-      @resultats_filtres = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
-      .group_sum_order
-
-        @resultats_filtres.each do |resultat|
-
-          piloteId = resultat.pilote_id
-    
-          resultat = Resultat.where(event_id: @eventId, pilote_id: piloteId)
-          resultat.update(cote: 100)
-         
-        end
-    
-        redirect_to cotes_url(numGp: @numEvent, saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 
-                      notice: "les points ont bien été calculés"
-    end
 
   
     private

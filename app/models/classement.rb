@@ -18,6 +18,8 @@ class Classement < ApplicationRecord
  scope :max_points, -> { all.order(score: :DESC).first }
 
 
+
+
+
+
 end
-
-

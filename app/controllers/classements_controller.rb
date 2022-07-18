@@ -115,23 +115,20 @@ def toggle_updateclassements
   @saisonId = Event.find(@eventId).saison_id
   @numGp = Event.find(@eventId).numero 
 
-  max_points = Classement.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@numGp).max_points.score.to_i
 
   @classementsEvent = Classement.all.where(event_id: @eventId)
 
-    @classementsEvent.each_with_index do |classement, i|
-
-      i = i + 1
+    @classementsEvent.each do |classement|
 
       @piloteId = classement.pilote_id
 
       # obtenir le score total du pilote, ajouter les filtres les uns apres les autres
       valScore = Resultat.pilote_courant(@piloteId).division_courant(@divisionId).saison_courant(@saisonId).numero_until_courant(@numGp).sum(:score)
-      valCoteBase = 1 + ((max_points - valScore)/100)
-
+    #  valCoteBase = max_points - valScore
 
       classement.update(score: valScore )
-      classement.update(cote:  valCoteBase)
+      
+   
 
     end
 
@@ -146,6 +143,9 @@ def toggle_triclassements
   @saisonId = Event.find(@eventId).saison_id
   @numGp = Event.find(@eventId).numero 
 
+  max_points = Classement.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@numGp).max_points.score.to_i
+
+
   @classementsEvent = Classement.all.where(event_id: @eventId).order(:score).reverse
 
     @classementsEvent.each_with_index do |classement, i|
@@ -153,11 +153,13 @@ def toggle_triclassements
       i = i + 1
       valPosition = i 
       valScore = classement.score
-      valCoteBase = classement.cote
-      valCoteVictoire = valCoteBase * (1 * valPosition)
+      valCoteBase = 1 + (((max_points - valScore)/100) * i )
 
       classement.update(position:  valPosition)
-
+    
+      classement.update(cote_victoire:  valCoteBase + 1.4)
+      classement.update(cote_podium:  valCoteBase + 0.9 )
+      classement.update(cote_top10:  valCoteBase + 0.3)
 
     end
 
@@ -166,19 +168,15 @@ def toggle_triclassements
 end
 
 
-
   private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_classement
       @classement = Classement.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def classement_params
      # params.fetch(:classement, {})
      params.require(:classement).permit(:cote, :pilote_id, :event_id)
     end
-
 
 end

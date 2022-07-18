@@ -33,4 +33,6 @@ scope :sum_order_score, -> { select('pilote_id, score, SUM(score) AS total')}
 scope :group_sum_order, -> { select('pilote_id, SUM(score) AS total').group('pilote_id').order('total').reverse }
   
 
+
+
 end

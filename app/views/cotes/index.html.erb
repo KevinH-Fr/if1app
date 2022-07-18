@@ -7,7 +7,7 @@
   <% if (@eventId).present? %> 
     <%= render "shared/eventactif" %>
     
-    <%= link_to "Calculs cotes", toggle_calculcotes_cote_path(@eventId), class:"btn btn-success", style:"margin: 2px" %>
+    <%#= link_to "Calculs cotes", toggle_calculcotes_cote_path(@eventId), class:"btn btn-success", style:"margin: 2px" %>
     <br><br>
 
     <%#= tableau data cotes %>
@@ -16,37 +16,26 @@
         <tr>
           <th style="text-align: center;">#</th>
           <th>Pilote</th>
-          <th style="text-align: center;">victoire</th>
+          <th>victoire</th>
+          <th>podium</th>
+          <th>top10</th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <% @calculs_cotes.each_with_index do | resultat, i| %>
-            <td style="text-align: center;">
-                <strong>  
-                  <%= (i+1) %>
-                </strong> 
+          <% @cotes.each_with_index do | cote, i| %>
+           <td>
+              <%= cote.position %>
             </td>
             <td>
-              <%#= (resultat[0]) %> 
-              <%= Pilote.find(resultat.pilote_id).nom %>
-
+              <%= Pilote.find(cote.pilote_id).nom %>
             </td>
-            <td style="text-align: center;">
-             
-             <%#= (resultat[1]) %> 
+           
 
-              <%#= @valDepuisModel %>
-
-                <% pointsPilote = resultat.total %>
-                <% pointsMax = @testmaxScore[1] %>
-                <%# coteVictoire =  pointsPilote  %>
-               
-                <%=  number_with_precision(1.11 + ((i+(i*1.13) * ( (pointsMax - pointsPilote)/4))), precision: 2) %>
-                 <%#=  number_with_precision(resultat.total, precision: 2) %>
-            
-            </td>
+            <td> <%= cote.cote_victoire %> </td>
+            <td> <%= cote.cote_podium %> </td>
+            <td> <%= cote.cote_top10 %> </td>
         </tr>
         <% end %>
       </tbody>

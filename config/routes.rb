@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :cotes do
     member do
       get :toggle_calculcotes
+      get :cote_victoire
     end
   end
 
@@ -44,15 +45,15 @@ Rails.application.routes.draw do
   get 'home/role'
 
 
-# test call action
-resources :licences do
-  member do
-    get :toggle_creerlicences
-    get :toggle_supprimerlicences
-    get :toggle_calculrecuplicences
-    get :toggle_calculrecuplicencesIndiv
+  # test call action
+  resources :licences do
+    member do
+      get :toggle_creerlicences
+      get :toggle_supprimerlicences
+      get :toggle_calculrecuplicences
+      get :toggle_calculrecuplicencesIndiv
   
+    end
   end
-end
 
 end
