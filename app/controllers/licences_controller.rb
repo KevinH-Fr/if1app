@@ -129,7 +129,6 @@ end
 
 def toggle_calculrecuplicences
 
-  # a modifier pour integrer le calcul en cours dans la methode indiv en dessous
   @eventId = params[:id]
   @licencesValDepart = 12
   @divisionLiee = Event.find(@eventId).division_id

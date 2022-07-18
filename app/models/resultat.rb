@@ -17,27 +17,20 @@ class Resultat < ApplicationRecord
 
 scope :division_courant, -> (division_courant) { joins(:event).where("division_id = ?", division_courant)}
 scope :saison_courant, -> (saison_courant) { joins(:event).where("saison_id = ?", saison_courant)}
-scope :event_courant, -> (event_courant) { where("event_id <= ?", event_courant)}
+scope :event_courant, -> (event_courant) { where("event_id = ?", event_courant)}
+
+scope :pilote_courant, -> (pilote_courant) { where("pilote_id = ?", pilote_courant)}
 
 scope :numero_until_courant, -> (numero_until_courant) { joins(:event).where("numero <= ?", numero_until_courant)}
 
 # tempo
 scope :group_by_pilote, -> { group('pilote_id') }
 scope :sum_by_pilote, -> { sum('score') }
-scope :order_by_sum, -> { order('score') }
+scope :order_by_sum, -> { order('score').reverse }
 scope :sum_order_score, -> { select('pilote_id, score, SUM(score) AS total')}
 
 # utilisée
 scope :group_sum_order, -> { select('pilote_id, SUM(score) AS total').group('pilote_id').order('total').reverse }
-
-  def initialize(n,a)  
-    @pilote_id = n  
-    @score = a  
-  end
-
-  def valeur  
-    "#{@pilote_id}" 
-  end  
   
 
 end

@@ -22,7 +22,15 @@ Rails.application.routes.draw do
   resources :pilotes
   resources :resultats
   resources :classecuries
-  resources :classements
+
+
+  resources :classements do
+    member do
+      get :toggle_creerclassements
+      get :toggle_updateclassements
+      get :toggle_supprimerclassements
+    end
+  end
 
   resources :cotes do
     member do
