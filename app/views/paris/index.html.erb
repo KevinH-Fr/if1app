@@ -8,6 +8,9 @@
 <% if (@eventId).present? %>
   <%= render "shared/eventactif" %>
 
+
+ <%= link_to "calcul résultats", toggle_calculresultats_pari_path(@eventId), class:"btn btn-primary", style:"margin: 2px" %>
+
 <%# tab datas %>
 
 <div class="table-responsive">

@@ -205,9 +205,6 @@ def toggle_calculrecuplicences
           
         end
        
-    #  licence = Licence.where(event_id: @eventId, pilote_id: piloteId)
-    #  licence.update(recupere: recupCourant)
-
     end
 
     redirect_to licences_url(numGp: numEvent, saisonId: @saisonLiee, eventId: @eventId, divisionId: @divisionLiee), 

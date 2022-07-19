@@ -30,25 +30,6 @@ class ClassementsController < ApplicationController
       @eventNum = Event.find(@eventId).numero 
 
       @divisionId = Event.find(@eventId).division_id 
-
-    #  @pilotes = Pilote.all
-    #  @pilotesActifDiv = Pilote.all.where(statut: "actif", division_id: @divisionId)  
-
-     #   @resultatsFiltres = Resultat.joins(:event).where(
-     #     'numero <= :numero AND 
-     #      saison_id = :saison_id AND 
-     #      division_id = :division_id',  
-     #      numero: params[:numGp],
-     #      saison_id: params[:saisonId],
-     #      division_id: params[:divisionId])
-
-    #      @resultatsFiltres = @resultatsFiltres.select(:pilote_id, "sum(score) as sum_amount").group(:pilote_id).order(
-    #        "sum(score) desc").sum(:score)
-
-        
-     #   @classements = Resultat.saison_courant(@saisonId)
-     #   .division_courant(@divisionId)
-     #   .numero_until_courant(@eventNum).group_sum_order
     
      @classements = Classement.event_courant(@eventId)
 
@@ -108,7 +89,6 @@ def toggle_supprimerclassements
                notice: "les classements de l'event courant ont bien été supprimés"
 end
 
-
 def toggle_updateclassements
   @eventId = params[:id]
   @divisionId = Event.find(@eventId).division_id
@@ -117,9 +97,8 @@ def toggle_updateclassements
 
 
   @classementsEvent = Classement.all.where(event_id: @eventId)
-
+  
     @classementsEvent.each do |classement|
-
       @piloteId = classement.pilote_id
 
       # obtenir le score total du pilote, ajouter les filtres les uns apres les autres
@@ -128,14 +107,11 @@ def toggle_updateclassements
 
       classement.update(score: valScore )
       
-   
-
     end
 
   redirect_to classements_url(saisonId: @saisonId, eventId: @eventId, divisionId: @divisionId, numGp: @numGp), 
                 notice: "les classements ont bien été mis à jour"
 end
-
 
 def toggle_triclassements
   @eventId = params[:id]
@@ -145,28 +121,23 @@ def toggle_triclassements
 
   max_points = Classement.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@numGp).max_points.score.to_i
 
-
   @classementsEvent = Classement.all.where(event_id: @eventId).order(:score).reverse
 
     @classementsEvent.each_with_index do |classement, i|
-
       i = i + 1
       valPosition = i 
       valScore = classement.score
       valCoteBase = 1 + (((max_points - valScore)/100) * i )
 
       classement.update(position:  valPosition)
-    
       classement.update(cote_victoire:  valCoteBase + 1.4)
       classement.update(cote_podium:  valCoteBase + 0.9 )
       classement.update(cote_top10:  valCoteBase + 0.3)
-
     end
 
   redirect_to classements_url(saisonId: @saisonId, eventId: @eventId, divisionId: @divisionId, numGp: @numGp), 
                 notice: "les classements ont bien été triés"
 end
-
 
   private
 

@@ -100,6 +100,44 @@ class ParisController < ApplicationController
     end
   end
 
+  def toggle_calculresultats
+
+    @eventId = params[:id]
+    @divisionId = Event.find(@eventId).division_id
+    @saisonId = Event.find(@eventId).saison_id
+
+    @parisEvent = Pari.event_courant(@eventId)
+
+    @parisEvent.all.each do |pari|
+
+      coureurId = pari.coureur_id
+      typePari = pari.typepari
+      resultatCoureur = Resultat.where(event_id: @eventId, pilote_id: coureurId).first.course
+
+      if typePari == "victoire" && resultatCoureur == 1
+          pari.update(resultat: true)
+      else
+        if typePari == "podium" && resultatCoureur <= 3
+          pari.update(resultat: true)
+        else
+          if typePari == "top10" && resultatCoureur <= 10
+            pari.update(resultat: true)
+          else
+            pari.update(resultat: false)
+          end
+        end
+      end
+
+      
+
+    end  
+    
+    redirect_to paris_url(saisonId: @saisonId, eventId: @eventId, divisionId: @divisionId),
+               notice: "les résultats des paris de l'event courant ont bien été mis à jour"
+
+  end
+
+
   private
     def set_pari
       @pari = Pari.find(params[:id])

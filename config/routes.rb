@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :paris
+
 
   root 'pages#home'
 
@@ -39,6 +39,13 @@ Rails.application.routes.draw do
       get :cote_victoire
     end
   end
+
+  resources :paris do
+    member do
+      get :toggle_calculresultats
+    end
+  end
+
 
   get 'home/index'
   get 'home/users'
