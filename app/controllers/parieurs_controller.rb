@@ -8,7 +8,8 @@ class ParieursController < ApplicationController
         @events = Event.all
         @saisons = Saison.all
     
-  
+        @valDepart = 1000
+
       if params[:saisonId]
         @saisonId = params[:saisonId]
       end
