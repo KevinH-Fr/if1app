@@ -114,21 +114,17 @@ class ParisController < ApplicationController
       typePari = pari.typepari
       resultatCoureur = Resultat.where(event_id: @eventId, pilote_id: coureurId).first.course
 
-      if typePari == "victoire" && resultatCoureur == 1
-          pari.update(resultat: true)
-      else
-        if typePari == "podium" && resultatCoureur <= 3
-          pari.update(resultat: true)
-        else
-          if typePari == "top10" && resultatCoureur <= 10
-            pari.update(resultat: true)
-          else
-            pari.update(resultat: false)
-          end
-        end
-      end
+      pariMontant = pari.montant
+      pariCote = pari.cote
 
-      
+      if typePari == "victoire" && resultatCoureur == 1 || typePari == "podium" && resultatCoureur <= 3 || typePari == "top10" && resultatCoureur <= 10
+
+          pari.update(resultat: true)
+          pari.update(solde: pariMontant * pariCote )
+        else
+          pari.update(resultat: false)
+          pari.update(solde: 0 )
+        end
 
     end  
     

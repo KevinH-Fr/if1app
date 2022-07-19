@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :pilotes
   resources :resultats
   resources :classecuries
+  resources :parieurs
 
 
   resources :classements do

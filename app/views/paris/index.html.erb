@@ -9,7 +9,8 @@
   <%= render "shared/eventactif" %>
 
 
- <%= link_to "calcul résultats", toggle_calculresultats_pari_path(@eventId), class:"btn btn-primary", style:"margin: 2px" %>
+ <%= link_to "calcul résultats", toggle_calculresultats_pari_path(@eventId), class:"btn btn-warning", style:"margin: 2px" %>
+ <br/><br/>
 
 <%# tab datas %>
 
@@ -50,7 +51,6 @@
   </table>
 </div>
 
-<br>
 <%= link_to "Nouveu pari", new_pari_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: @numGp), class:"btn btn-sm btn-primary" %>
 
 <% end %>
