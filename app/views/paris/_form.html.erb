@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+
    <div>
       <%= form.label :event, style: "display: block" %>
       <%= form.select(:event_id, options_from_collection_for_select(
@@ -20,14 +21,50 @@
     </div>
       <br>
 
-   <div>
+
+
+  <div data-controller="form-element">
+    <%= form.button "Validate", formaction: new_pari_path, 
+        formmethod: :get, data: {turbo_frame: :montant_field, 
+        form_element_target: "submitbtn"} %>
+      <div>
     <%= form.label :parieur, style: "display: block" %>
     <%= form.select(:parieur_id, options_from_collection_for_select(
                   @parieur,'id', 'nom', 
                  :selected => form.object.parieur_id), 
-                 :include_blank => true) %>
+              {include_blank: true}, 
+              {data: { action: "change->form-element#remotesubmit"}}) %>
+    </div>
   </div>
   <br>
+
+    <%= turbo_frame_tag :montant_field do %>
+       <div>
+       
+      
+         <% @eventId = form.object.event_id %>
+
+          <% if @eventId.present? %>
+            <% @eventNum = Event.find(@eventId).numero %>
+            <% @divisionId = Event.find(@eventId).division_id %>
+            <% @saisonId = Event.find(@eventId).saison_id %>
+          <% end %>
+
+     
+                 <%# val solde parieur %> 
+         <% parieurId = form.object.parieur_id %>
+         <% parieurSolde =  Pari.saison_courant(@saisonId).division_courant( @divisionId).numero_until_courant(@eventNum).pilote_courant(parieurId).sum_parieur.first.total %>
+       
+         <div> solde dispo parieur | <strong>  <%= parieurSolde %> </strong>  </div>
+
+        <%#= form.text_field :montant, value: parieurSolde %>
+
+
+
+
+    </div>
+  <% end %>
+
 
   <div data-controller="form-element">
     <%= form.button "Validate", formaction: new_pari_path, 

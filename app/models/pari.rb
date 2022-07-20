@@ -10,11 +10,12 @@ class Pari < ApplicationRecord
 
     scope :saison_courant, -> (saison_courant) { joins(:event).where("saison_id = ?", saison_courant)}
     scope :event_courant, -> (event_courant) { where("event_id = ?", event_courant)}
-    scope :pilote_courant, -> (pilote_courant) { where("pilote_id = ?", pilote_courant)}
+    scope :pilote_courant, -> (pilote_courant) { where("parieur_id = ?", pilote_courant)}
     scope :numero_until_courant, -> (numero_until_courant) { joins(:event).where("numero <= ?", numero_until_courant)}
     scope :group_sum_order, -> { select('parieur_id, SUM(solde) AS total').group('parieur_id').order('total').reverse }
 
 
+    scope :sum_parieur, -> {select('parieur_id, SUM(solde) AS total')}
 
     validates :coureur_id, presence: true
     validates :parieur_id, presence: true
