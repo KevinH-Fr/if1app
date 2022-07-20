@@ -5,12 +5,6 @@ class Pari < ApplicationRecord
     belongs_to :event, :optional => true
 
 
-
-
-
-
-
-
     scope :division_courant, -> (division_courant) { joins(:event).where("division_id = ?", division_courant)}
 
     scope :saison_courant, -> (saison_courant) { joins(:event).where("saison_id = ?", saison_courant)}
@@ -45,6 +39,11 @@ class Pari < ApplicationRecord
     end
 
 
+    validate :calcul_solde
+
+    def calcul_solde
+
+    end
 
 
 
@@ -59,8 +58,9 @@ class Pari < ApplicationRecord
     end
 
     def set_default_cote
-        self.cote ||= 0
-      end
+     self.cote ||= 0
+    end
+
 
 
 end

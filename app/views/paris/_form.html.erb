@@ -53,10 +53,11 @@
      
                  <%# val solde parieur %> 
          <% parieurId = form.object.parieur_id %>
-         <% parieurSolde =  Pari.saison_courant(@saisonId).division_courant( @divisionId).numero_until_courant(@eventNum).pilote_courant(parieurId).sum_parieur.first.total %>
+         <% if parieurId.present?%>
+           <% parieurSolde =  Pari.saison_courant(@saisonId).division_courant( @divisionId).numero_until_courant(@eventNum).pilote_courant(parieurId).sum_parieur.first.total %>
        
-         <div> solde dispo parieur | <strong>  <%= parieurSolde %> </strong>  </div>
-
+           <div> solde dispo parieur | <strong>  <%= parieurSolde %> </strong>  </div>
+         <% end %>  
         <%#= form.text_field :montant, value: parieurSolde %>
 
 
@@ -113,45 +114,50 @@
               <% end %>
                 <div> cote retenue | <strong>  <%= @valCote %> </strong>  </div>
                 <div> gains possibles | <strong>  <%= @valCote * form.object.montant %> </strong>  </div>
+                <div> montant parié  | <strong>  <%=  form.object.montant %> </strong>  </div>
                 <br>
           <% end %>
         <% end %>
         <%# valCote = valCote %> 
         <% form.label :cote, style: "display: block" %>
         <%= form.text_field :cote, value: @valCote %>
-
+        <br>
+        <%= form.number_field :solde, value: - form.object.montant  %>
     </div>
   <% end %>
 
 
 
  <div data-controller="form-element">
-    <%= form.button "Validate", formaction: new_pari_path, 
+    <%#= form.button "Validate", formaction: new_pari_path, 
         formmethod: :get, data: {turbo_frame: :solde_field, 
         form_element_target: "submitbtn"} %>
     <div>
-      <%= form.label :resultat, style: "display: block" %>
-      <%= form.check_box :resultat, {data: { action: "change->form-element#remotesubmit"}} %>
+      <%#= form.label :resultat, style: "display: block" %>
+      <%#= form.check_box :resultat, {data: { action: "change->form-element#remotesubmit"}} %>
 
-      <% valCB = form.object.resultat %>
-      <%= valCB %>
+      <%# valCB = form.object.resultat %>
+      <%#= valCB %>
     </div>
   </div>
 
 
- <%= turbo_frame_tag :solde_field do %>
+ <%#= turbo_frame_tag :solde_field do %>
   <%# repasser les variables montantpari et valcote pour recalculer en cas de changement ? %>
   
   <div>
-    <% if form.object.resultat == true %>
-      <% valSolde =  @montantPari * @valCote %>
-    <% else %>
-      <% valSolde = 0 %>
-    <% end %>  
-      <%= form.label :solde, style: "display: block" %>
-      <%= form.number_field :solde, value: valSolde %>
+  
+
+    <%# if form.object.resultat == true %>
+      <%# valSolde =  @montantPari * @valCote %>
+    <%# else %>
+        
+      <%# valSolde = - form.object.montant  %>
+    <%# end %>  
+      <%#= form.label :solde, style: "display: block" %>
+      <%#= form.number_field :solde, value: valSolde %>
   </div>
-<% end %>  
+<%# end %>  
 
 
   <br/>
