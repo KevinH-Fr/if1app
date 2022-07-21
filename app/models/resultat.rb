@@ -25,6 +25,17 @@ scope :pilote_courant, -> (pilote_courant) { where("pilote_id = ?", pilote_coura
 
 scope :numero_until_courant, -> (numero_until_courant) { joins(:event).where("numero <= ?", numero_until_courant)}
 
+
+# test scopes p1, p2 etc pour ranking
+scope :compte_p1, -> { where("(course) = 1").count}
+scope :compte_p2, -> { where("(course) = 2").count}
+scope :compte_p3, -> { where("(course) = 3").count}
+scope :compte_p4, -> { where("(course) = 4").count}
+scope :compte_p5, -> { where("(course) = 5").count}
+
+
+scope :order_score_positions, -> {order('score') }
+
 # tempo
 scope :group_by_pilote, -> { group('pilote_id') }
 scope :sum_by_pilote, -> { sum('score') }

@@ -14,6 +14,20 @@ class Classement < ApplicationRecord
 
  scope :order_by_score, -> { order('score').reverse }
 
+ # test scopes p1, p2 etc pour ranking
+scope :compte_p1, -> { where("(course) = 1").count}
+scope :compte_p2, -> { where("(course) = 2").count}
+scope :compte_p3, -> { where("(course) = 3").count}
+scope :compte_p4, -> { where("(course) = 4").count}
+scope :compte_p5, -> { where("(course) = 5").count}
+
+# continuer ajouter les autres compte p x
+
+
+scope :order_score_positions, -> {order(score: :DESC, compte_p1: :DESC) }
+
+# continuer ajouter les autres compte p x
+
 
  scope :max_points, -> { all.order(score: :DESC).first }
 

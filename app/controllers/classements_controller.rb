@@ -31,7 +31,7 @@ class ClassementsController < ApplicationController
 
       @divisionId = Event.find(@eventId).division_id 
     
-     @classements = Classement.event_courant(@eventId)
+     @classements = Classement.event_courant(@eventId).order_score_positions
 
     else
       
