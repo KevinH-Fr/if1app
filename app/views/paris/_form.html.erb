@@ -21,20 +21,27 @@
     </div>
       <br>
 
+       <div>
+
+     <% @parieurId = Pilote.where(user_id: current_user.id).first.id %>
+
+        <% form.label :parieur, style: "display: block" %>
+        <%# form.select(:parieur_id, options_from_collection_for_select(
+                      @parieur,'id', 'nom', 
+                    :selected => @parieurId), 
+                    :include_blank => true) %>
+
+       <%= form.hidden_field(:parieur_id, value: @parieurId) %>           
+    </div>
+
+
 
 
   <div data-controller="form-element">
     <%= form.button "Validate", formaction: new_pari_path, 
         formmethod: :get, data: {turbo_frame: :montant_field, 
         form_element_target: "submitbtn"} %>
-      <div>
-    <%= form.label :parieur, style: "display: block" %>
-    <%= form.select(:parieur_id, options_from_collection_for_select(
-                  @parieur,'id', 'nom', 
-                 :selected => form.object.parieur_id), 
-              {include_blank: true}, 
-              {data: { action: "change->form-element#remotesubmit"}}) %>
-    </div>
+
   </div>
   <br>
 

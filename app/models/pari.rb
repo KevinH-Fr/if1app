@@ -33,8 +33,15 @@ class Pari < ApplicationRecord
       eventNum = Event.find(eventId).numero 
 
       soldeParieurAvant = Pari.saison_courant(saisonId).division_courant(divisionId).numero_until_courant(eventNum).pilote_courant(self.parieur_id).sum_parieur.first.total
-      if soldeParieurAvant - montant < 0 
-        errors.add(:montant, "insuffisant, impossible de miser plus que votre solde de points.")
+
+      if soldeParieurAvant.present?
+        if soldeParieurAvant - montant < 0 
+          errors.add(:montant, "insuffisant, impossible de miser plus que votre solde de points.")
+        end
+      else
+        if 1000 - montant < 0 
+          errors.add(:montant, "insuffisant, impossible de miser plus que votre solde de points.")
+        end
       end
     end
 
