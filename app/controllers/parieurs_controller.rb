@@ -29,6 +29,15 @@ class ParieursController < ApplicationController
 
         @parisEvent = Pari.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum).group_sum_order
 
+         
+    respond_to do |format|
+      format.html
+      format.pdf do
+
+       render pdf: "parieurs", template: "parieurs/liste", formats: [:html], layout: "pdf"
+      end
+    end
+
       else
         
       
