@@ -30,6 +30,16 @@ class ParisController < ApplicationController
       @coureur = Pilote.statut_actif.division_courant(@divisionId).all
       @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
 
+      
+    respond_to do |format|
+      format.html
+      format.pdf do
+
+       render pdf: "resultats", template: "paris/liste", formats: [:html], layout: "pdf"
+      end
+    end
+
+
     else
       
     end

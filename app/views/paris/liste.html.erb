@@ -1,0 +1,55 @@
+
+<br/>
+<h1> Paris </h1>
+<br/>
+
+<%# haut de page depuis partial %>
+<%= render "shared/hautpdf" %>
+
+<%#= tableau data classement %>
+
+ <% if (@eventId).blank? %>
+ <% else %>
+  <% eventNum = Event.find(@eventId).numero %>
+    
+
+<%# tab datas %>
+
+ <table style="margin-left:auto;margin-right:auto">
+    <thead class="table-dark">
+      <tr>  
+        <th>#</th>
+        <th>parieur</th>
+        <th>event</th>
+        <th>montant</th>
+        <th>type</th>
+        <th>coureur</th>
+        <th>cote</th>
+        <th>résultat</th>
+        <th>solde</th>
+      </tr>
+    </thead>
+      <tbody>
+          <% @paris.each do | pari| %> 
+           <tr>
+            <td> <%= pari.id  %> </td>
+            <td> <%= pari.parieur.nom %> </td>
+            <td> <%= pari.event_id %> </td>
+            <td> <%= pari.montant %> </td>
+            <td> <%= pari.typepari %> </td>
+            <td> <%= pari.coureur.nom %> </td>
+            <td> <%= pari.cote %> </td>
+            <td> <%= pari.resultat %> </td>
+            <td> <%= pari.solde %> </td>
+          </tr>
+         <% end %>
+    </tbody>
+  </table>
+
+
+  <br/>
+
+<%# bas de page depuis partial %>
+<%= render "shared/baspdf" %>
+
+<% end %>

@@ -22,27 +22,22 @@ class CotesController < ApplicationController
         @eventId = params[:eventId]
         @eventNum = Event.find(@eventId).numero 
 
-
-       # @calculs_cotes = Resultat.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@eventNum)
-        #.group_sum_order
-
         @cotes = Classement.event_courant(@eventId).order(:score).reverse
 
-        # ajouter une methode vers model qui modifie la valeur de base cote en une autre valeur pour avoir cote victoire
 
-      else
+    respond_to do |format|
+      format.html
+      format.pdf do
+
+       render pdf: "cotes", template: "cotes/liste", formats: [:html], layout: "pdf"
       end
-  
-      respond_to do |format|
-        format.html
-        format.pdf do
-         render pdf: "CotesParis", template: "classements/liste", formats: [:html], layout: "pdf"
-        end
-      end
-  
     end
 
+  else
 
+    end
+
+  end
   
     private
   

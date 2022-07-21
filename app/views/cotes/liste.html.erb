@@ -1,0 +1,55 @@
+
+<br/>
+<h1> Cotes paris </h1>
+<br/>
+
+<%# haut de page depuis partial %>
+<%= render "shared/hautpdf" %>
+
+<%#= tableau data classement %>
+
+ <% if (@eventId).blank? %>
+ <% else %>
+  <% eventNum = Event.find(@eventId).numero %>
+    
+
+<%# tab datas %>
+
+ <table style="margin-left:auto;margin-right:auto">
+    <thead class="table-dark">
+      <tr>  
+        <th>#</th>
+        <th>Pilote</th>
+        <th>victoire</th>
+        <th>podium</th>
+        <th>top10</th>
+      </tr>
+    </thead>
+
+     <tbody>
+        <tr>
+          <% @cotes.each_with_index do | cote, i| %>
+           <td>
+              <%= cote.position %>
+            </td>
+            <td>
+              <%= Pilote.find(cote.pilote_id).nom %>
+            </td>
+           
+
+            <td> <%= cote.cote_victoire %> </td>
+            <td> <%= cote.cote_podium %> </td>
+            <td> <%= cote.cote_top10 %> </td>
+        </tr>
+        <% end %>
+      </tbody>
+   
+  </table>
+
+
+  <br/>
+
+<%# bas de page depuis partial %>
+<%= render "shared/baspdf" %>
+
+<% end %>

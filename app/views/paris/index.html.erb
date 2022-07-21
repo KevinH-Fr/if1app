@@ -65,6 +65,12 @@
     <% end %>
   <% end %>
 
+  <br/> <hr/>
+        
+    <%# PDF event actif %>
+    <% numGp = Event.find(@eventId).numero %>
+    <%= link_to "PDF",  paris_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
+
 
 <% end %>
 
