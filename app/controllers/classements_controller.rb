@@ -121,7 +121,7 @@ def toggle_triclassements
 
   max_points = Classement.saison_courant(@saisonId).division_courant(@divisionId).numero_until_courant(@numGp).max_points.score.to_i
 
-  @classementsEvent = Classement.all.where(event_id: @eventId).order(:score).reverse
+  @classementsEvent = Classement.event_courant(@eventId).order_score_positions
 
     @classementsEvent.each_with_index do |classement, i|
       i = i + 1
