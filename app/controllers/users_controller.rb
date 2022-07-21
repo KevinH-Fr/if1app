@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
     def index
        # call_action
+       
     end 
 
     def show

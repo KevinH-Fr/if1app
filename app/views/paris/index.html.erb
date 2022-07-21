@@ -51,7 +51,20 @@
   </table>
 </div>
 
-<%= link_to "Nouveu pari", new_pari_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: @numGp), class:"btn btn-sm btn-primary" %>
+
+<%# afficher nouveau pari sous conditions %>
+
+  <% userId = current_user.id %>
+  <% if Pilote.where(user_id: userId).present? %>
+    <% piloteLie = Pilote.where(user_id: userId).first.id %>
+    <% divisionLiee = Pilote.where(user_id: userId).first.division_id %>
+    <% if piloteLie.present? %> 
+      <% if divisionLiee != @divisionId %>
+        <%= link_to "Nouveu pari", new_pari_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: @numGp), class:"btn btn-sm btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end %>
+
 
 <% end %>
 
