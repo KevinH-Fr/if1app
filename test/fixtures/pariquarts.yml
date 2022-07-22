@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  typepari: 1
+  parieur: one
+  coureur: one
+  event: one
+  solde: 9.99
+  cote: 9.99
+  resultat: false
+  montant: 1
+
+two:
+  typepari: 1
+  parieur: two
+  coureur: two
+  event: two
+  solde: 9.99
+  cote: 9.99
+  resultat: false
+  montant: 1

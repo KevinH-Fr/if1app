@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pariquart %>
+
+<div>
+  <%= link_to "Edit this pariquart", edit_pariquart_path(@pariquart) %> |
+  <%= link_to "Back to pariquarts", pariquarts_path %>
+
+  <%= button_to "Destroy this pariquart", @pariquart, method: :delete %>
+</div>

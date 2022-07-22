@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_22_000509) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_22_110241) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -116,6 +116,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_000509) do
     t.index ["pilote_id"], name: "index_licences_on_pilote_id"
   end
 
+  create_table "pariquarts", force: :cascade do |t|
+    t.integer "typepari"
+    t.integer "parieur_id", null: false
+    t.integer "coureur_id", null: false
+    t.integer "event_id", null: false
+    t.decimal "solde"
+    t.decimal "cote"
+    t.boolean "resultat"
+    t.integer "montant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coureur_id"], name: "index_pariquarts_on_coureur_id"
+    t.index ["event_id"], name: "index_pariquarts_on_event_id"
+    t.index ["parieur_id"], name: "index_pariquarts_on_parieur_id"
+  end
+
   create_table "paris", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -124,6 +140,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_000509) do
   create_table "parisbis", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "event_id", null: false
+    t.index ["event_id"], name: "index_parisbis_on_event_id"
   end
 
   create_table "paristers", force: :cascade do |t|
@@ -191,6 +209,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_000509) do
   add_foreign_key "events", "saisons"
   add_foreign_key "licences", "events"
   add_foreign_key "licences", "pilotes"
+  add_foreign_key "pariquarts", "coureurs"
+  add_foreign_key "pariquarts", "events"
+  add_foreign_key "pariquarts", "parieurs"
+  add_foreign_key "parisbis", "events"
   add_foreign_key "pilotes", "divisions"
   add_foreign_key "pilotes", "users"
   add_foreign_key "resultats", "events"
