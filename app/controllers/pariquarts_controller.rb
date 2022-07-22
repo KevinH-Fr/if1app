@@ -1,5 +1,5 @@
 class PariquartsController < ApplicationController
-  before_action :set_pari, only: %i[ show edit update destroy ]
+  before_action :set_pariquart, only: %i[ show edit update destroy ]
 
   def index
 
@@ -138,19 +138,19 @@ class PariquartsController < ApplicationController
 
     end  
     
-    redirect_to paris_url(saisonId: @saisonId, eventId: @eventId, divisionId: @divisionId),
+    redirect_to pariquarts_url(saisonId: @saisonId, eventId: @eventId, divisionId: @divisionId),
                notice: "les résultats des paris de l'event courant ont bien été mis à jour"
 
   end
 
 
   private
-    def set_pari
+    def set_pariquart
       @pari = Pariquart.find(params[:id])
     end
 
-    def pari_params
+    def pariquart_params
       
-      params.fetch(:pari, {}).permit(:montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
+      params.fetch(:pariquart, {}).permit(:montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
     end
 end

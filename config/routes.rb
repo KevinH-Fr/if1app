@@ -42,7 +42,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :paris do
+  resources :pariquarts do
     member do
       get :toggle_calculresultats
     end

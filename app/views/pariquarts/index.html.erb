@@ -9,7 +9,7 @@
   <%= render "shared/eventactif" %>
 
 
- <%= link_to "calcul résultats", toggle_calculresultats_pari_path(@eventId), class:"btn btn-warning", style:"margin: 2px" %>
+ <%= link_to "calcul résultats", toggle_calculresultats_pariquart_path(@eventId), class:"btn btn-warning", style:"margin: 2px" %>
  <br/><br/>
 
 <%# tab datas %>
@@ -44,7 +44,7 @@
             <td> <%= pari.solde %> </td>
             <td> <%= link_to '', pari, class:"fa-solid fa-eye btn btn-primary" %>  </td>
             <td> <%= button_to '', pari, class:"fa-solid fa-trash-can btn btn-danger", method: :delete, :onclick => "return confirm('Sûr ?')" %>  </td> 
-            <td> <%= link_to "", edit_pari_path(pari), class:"fa-regular fa-pen-to-square btn btn-secondary" %> </td> 
+            <td> <%= link_to "", edit_pariquart_path(pari), class:"fa-regular fa-pen-to-square btn btn-secondary" %> </td> 
           </tr>
          <% end %>
     </tbody>
@@ -60,7 +60,7 @@
     <% divisionLiee = Pilote.where(user_id: userId).first.division_id %>
     <% if piloteLie.present? %> 
       <% if divisionLiee != @divisionId %>
-        <%= link_to "Nouveu pari", new_pari_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: @numGp), class:"btn btn-sm btn-primary" %>
+        <%= link_to "Nouveu pari", new_pariquart_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: @numGp), class:"btn btn-sm btn-primary" %>
       <% end %>
     <% end %>
   <% end %>
@@ -69,7 +69,7 @@
         
     <%# PDF event actif %>
     <% numGp = Event.find(@eventId).numero %>
-    <%= link_to "PDF",  paris_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
+    <%= link_to "PDF",  pariquarts_path(saisonId: @saisonId, divisionId: @divisionId, eventId: @eventId, numGp: numGp, format: :pdf), class:"btn btn-dark" %>
 
 
 <% end %>
