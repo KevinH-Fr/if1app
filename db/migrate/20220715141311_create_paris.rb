@@ -7,7 +7,14 @@ class CreateParis < ActiveRecord::Migration[7.0]
       t.boolean :resultat
       t.integer :solde
 
+      t.references :parieur
+      t.references :coureur
+
       t.timestamps
     end
+
+    add_foreign_key :paris, :pilotes, column: :parieur_id, primary_key: :id
+    add_foreign_key :paris, :pilotes, column: :coureur_id, primary_key: :id
+
   end
 end

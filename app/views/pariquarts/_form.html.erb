@@ -1,7 +1,7 @@
 <%= form_with(model: pariquart) do |form| %>
   <% if pariquart.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(pariquart.errors.count, "error") %> prohibited this pariquart from being saved:</h2>
+      <h2><%= pluralize(pariquart.errors.count, "error") %> prohibited this pari from being saved:</h2>
 
       <ul>
         <% pariquart.errors.each do |error| %>
@@ -11,47 +11,60 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :typepari, style: "display: block" %>
-    <%= form.number_field :typepari %>
+
+   <div>
+      <%= form.label :event, style: "display: block" %>
+      <%= form.text_field :event_id %>  
   </div>
+  
+  <br/>
+
+      <div>
+        <%= form.label :parieur, style: "display: block" %>
+        <%= form.text_field :parieur_id %>
+    </div>
+
+    <br>
+
+    <div>
+        <%= form.label :coureur, style: "display: block" %>
+        <%= form.text_field :coureur_id %>
+    </div>
+   
+
+
+ <div>
+        <%= form.label :montant, style: "display: block" %>
+        <%= form.number_field :montant %>
+      </div>
+       <br>
 
   <div>
-    <%= form.label :parieur_id, style: "display: block" %>
-    <%= form.text_field :parieur_id %>
-  </div>
+        <%= form.label :typepari, style: "display: block" %>
+        <%= form.select(:typepari, Pariquart.typeparis.keys) %>
+      </div>
+   <br>
+
+<div>
+   <%= form.label :cote, style: "display: block" %>
+   <%= form.text_field :cote %>
+       
+</div>
+
+<div>
+  <%= form.label :solde, style: "display: block" %>
+  <%= form.number_field :solde, value: - form.object.montant  %>
+
+</div>
+
+<br>
+    <div>
+      <%= form.label :resultat, style: "display: block" %>
+      <%= form.check_box :resultat %>
+
+    </div>
 
   <div>
-    <%= form.label :coureur_id, style: "display: block" %>
-    <%= form.text_field :coureur_id %>
-  </div>
-
-  <div>
-    <%= form.label :event_id, style: "display: block" %>
-    <%= form.text_field :event_id %>
-  </div>
-
-  <div>
-    <%= form.label :solde, style: "display: block" %>
-    <%= form.text_field :solde %>
-  </div>
-
-  <div>
-    <%= form.label :cote, style: "display: block" %>
-    <%= form.text_field :cote %>
-  </div>
-
-  <div>
-    <%= form.label :resultat, style: "display: block" %>
-    <%= form.check_box :resultat %>
-  </div>
-
-  <div>
-    <%= form.label :montant, style: "display: block" %>
-    <%= form.number_field :montant %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+     <%= form.submit "Valider", class:"btn btn-success" %>
   </div>
 <% end %>

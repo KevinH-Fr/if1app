@@ -17,13 +17,13 @@ class Pariquart < ApplicationRecord
 
   scope :sum_parieur, -> {select('parieur_id, SUM(solde) AS total')}
 
-  validates :coureur_id, presence: true
-  validates :parieur_id, presence: true
+#  validates :coureur_id, presence: true
+#  validates :parieur_id, presence: true
 
-  validates :typepari, presence: true
+#  validates :typepari, presence: true
  
 
-  validate :verif_montant
+#  validate :verif_montant
 
   def verif_montant
 
@@ -46,13 +46,6 @@ class Pariquart < ApplicationRecord
   end
 
 
-  validate :calcul_solde
-
-  def calcul_solde
-
-  end
-
-
 
   enum typepari: [:victoire, :podium, :top10]
 
@@ -64,8 +57,8 @@ class Pariquart < ApplicationRecord
     self.montant ||= 0
   end
 
-  def set_default_cote
-   self.cote ||= 0
+  def set_default_valcote
+   self.valcote ||= 0
   end
 
 end

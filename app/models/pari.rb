@@ -59,13 +59,13 @@ class Pari < ApplicationRecord
 
     scope :event_courant, -> (event_courant) { where(event_id: event_courant)}
 
-    after_initialize :set_default_montant, :set_default_cote, :if => :new_record?
+    after_initialize :set_default_montant, :set_default_valcote, :if => :new_record?
     def set_default_montant
       self.montant ||= 0
     end
 
-    def set_default_cote
-     self.cote ||= 0
+    def set_default_valcote
+     self.valcote ||= 0
     end
 
 

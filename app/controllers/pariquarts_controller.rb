@@ -25,7 +25,8 @@ class PariquartsController < ApplicationController
       @eventId = params[:eventId]
       @eventNum = Event.find(@eventId).numero 
 
-      @pariquarts = Pariquart.event_courant(@eventId).all
+  #    @pariquarts = Pariquart.event_courant(@eventId).all
+  @pariquarts = Pariquart.all
 
       @coureur = Pilote.statut_actif.division_courant(@divisionId).all
       @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
@@ -51,10 +52,12 @@ class PariquartsController < ApplicationController
   end
 
   def new
+
+    @pariquart =  Pariquart.new(pariquart_params)
+
     @divisionId = params[:divisionId]
     @eventId = params[:eventId]
-
-    @pari = Pariquart.new(pari_params)
+    @pariquart = Pariquart.new(pariquart_params)
 
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all
     @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
@@ -71,41 +74,41 @@ class PariquartsController < ApplicationController
   end
 
   def create
-    @pari = Pariquart.new(pari_params)
+    @pariquart = Pariquart.new(pariquart_params)
     @coureur = Pilote.statut_actif.division_courant(@divisionId).all
-    @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
+   # @parieur = Pilote.statut_actif.division_non_courant(@divisionId).all
 
     @event = Event.all
     @pilote = Pilote.all
 
     respond_to do |format|
-      if @pari.save
-        format.html { redirect_to pari_url(@pari), notice: "Pari was successfully created." }
+      if @pariquart.save
+        format.html { redirect_to pariquart_url(@pariquart), notice: "Pari was successfully created." }
         format.json { render :show, status: :created, location: @pari }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @pari.errors, status: :unprocessable_entity }
+        format.json { render json: @pariquart.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @pari.update(pari_params)
-        format.html { redirect_to pari_url(@pari), notice: "Pari was successfully updated." }
-        format.json { render :show, status: :ok, location: @pari }
+      if @pariquart.update(pariquart_params)
+        format.html { redirect_to pariquart_url(@pariquart), notice: "Pari was successfully updated." }
+        format.json { render :show, status: :ok, location: @pariquart }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @pari.errors, status: :unprocessable_entity }
+        format.json { render json: @pariquart.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @pari.destroy
+    @pariquart.destroy
 
     respond_to do |format|
-      format.html { redirect_to paris_url, notice: "Pari was successfully destroyed." }
+      format.html { redirect_to pariquarts_url, notice: "Pari was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -146,7 +149,7 @@ class PariquartsController < ApplicationController
 
   private
     def set_pariquart
-      @pari = Pariquart.find(params[:id])
+      @pariquart = Pariquart.find(params[:id])
     end
 
     def pariquart_params

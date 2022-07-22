@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_22_110241) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_22_162255) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -135,6 +135,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_110241) do
   create_table "paris", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "event_id", null: false
+    t.decimal "montant"
+    t.integer "typepari"
+    t.decimal "valcote"
+    t.integer "coureur_id"
+    t.integer "parieur_id"
+    t.decimal "solde"
+    t.boolean "resultat"
+    t.index ["event_id"], name: "index_paris_on_event_id"
   end
 
   create_table "parisbis", force: :cascade do |t|
@@ -212,6 +221,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_22_110241) do
   add_foreign_key "pariquarts", "coureurs"
   add_foreign_key "pariquarts", "events"
   add_foreign_key "pariquarts", "parieurs"
+  add_foreign_key "paris", "events"
+  add_foreign_key "paris", "pilotes", column: "coureur_id"
+  add_foreign_key "paris", "pilotes", column: "parieur_id"
   add_foreign_key "parisbis", "events"
   add_foreign_key "pilotes", "divisions"
   add_foreign_key "pilotes", "users"

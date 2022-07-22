@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :pariquarts
-
 
   root 'pages#home'
 
@@ -39,6 +37,13 @@ Rails.application.routes.draw do
     member do
       get :toggle_calculcotes
       get :cote_victoire
+    end
+  end
+
+
+  resources :paris do
+    member do
+      get :toggle_calculresultats
     end
   end
 

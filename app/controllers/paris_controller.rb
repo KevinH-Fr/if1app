@@ -125,7 +125,7 @@ class ParisController < ApplicationController
       resultatCoureur = Resultat.where(event_id: @eventId, pilote_id: coureurId).first.course
 
       pariMontant = pari.montant
-      pariCote = pari.cote
+      pariCote = pari.valcote
 
       if typePari == "victoire" && resultatCoureur == 1 || typePari == "podium" && resultatCoureur <= 3 || typePari == "top10" && resultatCoureur <= 10
 
@@ -151,6 +151,6 @@ class ParisController < ApplicationController
 
     def pari_params
       
-      params.fetch(:pari, {}).permit(:montant, :cote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
+      params.fetch(:pari, {}).permit(:montant, :valcote, :resultat, :solde, :event_id, :parieur_id, :coureur_id, :typepari)
     end
 end
