@@ -11,6 +11,8 @@ module If1app
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.autoloader = :classic
+
    # config.assets.precompile += ['pdf.css']
 
     # Configuration for the application, engines, and railties goes here.
