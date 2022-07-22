@@ -9,9 +9,8 @@ Bundler.require(*Rails.groups)
 module If1app
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-   # config.load_defaults 7.0
-
-    config.autoloader = :classic
+    config.load_defaults 7.0
+    
 
    # config.assets.precompile += ['pdf.css']
 
