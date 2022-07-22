@@ -1,0 +1,2 @@
+class Parisbi < ApplicationRecord
+end

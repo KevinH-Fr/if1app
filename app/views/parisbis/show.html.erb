@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @parisbi %>
+
+<div>
+  <%= link_to "Edit this parisbi", edit_parisbi_path(@parisbi) %> |
+  <%= link_to "Back to parisbis", parisbis_path %>
+
+  <%= button_to "Destroy this parisbi", @parisbi, method: :delete %>
+</div>

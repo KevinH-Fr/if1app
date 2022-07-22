@@ -1,0 +1,2 @@
+module ParisbisHelper
+end

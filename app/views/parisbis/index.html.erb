@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Parisbis</h1>
+
+<div id="parisbis">
+  <% @parisbis.each do |parisbi| %>
+    <%= render parisbi %>
+    <p>
+      <%= link_to "Show this parisbi", parisbi %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New parisbi", new_parisbi_path %>
