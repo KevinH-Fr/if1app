@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_21_122802) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_22_000509) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_122802) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "ante_paris", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "circuits", force: :cascade do |t|
@@ -112,19 +117,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_122802) do
   end
 
   create_table "paris", force: :cascade do |t|
-    t.integer "parieur_id"
-    t.integer "coureur_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "event_id", null: false
-    t.integer "montant"
-    t.decimal "cote"
-    t.boolean "resultat"
-    t.decimal "solde"
-    t.integer "typepari"
-    t.index ["coureur_id"], name: "index_paris_on_coureur_id"
-    t.index ["event_id"], name: "index_paris_on_event_id"
-    t.index ["parieur_id"], name: "index_paris_on_parieur_id"
+  end
+
+  create_table "parisbis", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "paristers", force: :cascade do |t|
+    t.decimal "montant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pilotes", force: :cascade do |t|
@@ -179,8 +184,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_122802) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "classements", "events"
   add_foreign_key "classements", "pilotes"
   add_foreign_key "events", "circuits"
@@ -188,9 +191,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_21_122802) do
   add_foreign_key "events", "saisons"
   add_foreign_key "licences", "events"
   add_foreign_key "licences", "pilotes"
-  add_foreign_key "paris", "events"
-  add_foreign_key "paris", "pilotes", column: "coureur_id"
-  add_foreign_key "paris", "pilotes", column: "parieur_id"
   add_foreign_key "pilotes", "divisions"
   add_foreign_key "pilotes", "users"
   add_foreign_key "resultats", "events"

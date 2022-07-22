@@ -50,8 +50,4 @@ scope :order_score_positions,
  scope :max_points, -> { all.order(score: :DESC).first }
 
 
-
-
-
-
 end
